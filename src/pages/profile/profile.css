@@ -1,0 +1,19 @@
+.profile {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 30% auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile > div {
+  padding: 20px;
+  height: 100%;
+}
+
+.profile > :first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

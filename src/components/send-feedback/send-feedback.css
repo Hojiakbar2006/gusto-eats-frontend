@@ -1,0 +1,16 @@
+.feedback {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.feedback-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  align-items: center;
+  flex-wrap: wrap;
+}

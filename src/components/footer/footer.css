@@ -1,0 +1,58 @@
+footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 40px 6%;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+footer > :first-child {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+
+footer > :first-child > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+footer > :first-child > :first-child {
+  gap: 20px;
+}
+
+footer > :first-child > :first-child > p {
+  width: 220px;
+}
+
+footer > :first-child > :first-child > div > a {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+footer > :first-child > div > div {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-title {
+  font-size: 20px;
+}
+
+footer > :first-child > div > a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: rgb(55, 125, 255);
+}
+
+footer > :last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}

@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  background: #e9ecef;
+}
+
+#root {
+  max-width: 1500px;
+  width: 100%;
+  min-height: 100vh;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* >>>>>>>>>>>>>> CONTAINERS <<<<<<<<<<<< */
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 6%;
+}
+
+.comp-container {
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  background: #fff;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title > h1 {
+  color: var(#333);
+  font-family: Poppins;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 60px; /* 133.333% */
+}
+
+/* >>>>>>>>>>>>>> CONTAINERS <<<<<<<<<<<< */
+
+/* >>>>>>>>>>>GLOBAL FOOD CARD <<<<<<<<<<< */
+
+.food-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.food-container > .box {
+  width: 280px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.food-container > .box > figure {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.chip {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  margin: 5px 5px 0 0;
+  color: #fff;
+  background: #ff0000;
+}
+
+.food-container > .box > figure > img {
+  height: 100%;
+}
+
+.box-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+}
+
+.box-items > h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.box-items > .group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box-items > p {
+  font-size: 14px;
+}
+
+.box-items > .group > p {
+  font-size: 20px;
+}
+
+/* >>>>>>>>>>>GLOBAL FOOD CARD <<<<<<<<<<< */
+
+.loading {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 12;
+}

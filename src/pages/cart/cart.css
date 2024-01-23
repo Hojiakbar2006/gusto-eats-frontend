@@ -1,0 +1,62 @@
+.cart-container {
+  width: 100%;
+  display: flex;
+  padding: 20px 6%;
+  gap: 20px;
+}
+
+.cart-container > div {
+  background: #ffffff;
+}
+
+.cart-container > :first-child {
+  width: 70%;
+  background: #ffffff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-container > :last-child {
+  width: 30%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.cart-container > div > .cart-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.cart-container > div > .cart-box > :first-child {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+}
+
+.cart-container > div > .cart-box > div > figure {
+  width: 60px;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.total-price-card {
+  display: flex;
+}
