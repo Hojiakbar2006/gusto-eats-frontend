@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { authHeader } from "./header";
-import * as endpoints from "../../utils/endpoint"; // Corrected import
+import * as endpoints from "../../utils/endpoint";
 
 export const authApi = createApi({
   reducerPath: "authApi",

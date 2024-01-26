@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../redux/services/productApi";
 
 export default function Category() {
-  // const url = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
   const location = useLocation();

@@ -17,7 +17,7 @@ export default function Banner() {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (e.target.search.value) {
-                  navigate(`/menu/?search=${e.target.search.value}`);
+                  navigate(`?query=${e.target.search.value}`);
                 } else {
                   navigate(`/menu/`);
                 }

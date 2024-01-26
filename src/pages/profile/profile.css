@@ -17,3 +17,17 @@
   flex-direction: column;
   align-items: center;
 }
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table > thead > tr > td {
+  text-align: center;
+  padding: 6px;
+}
+.order-table > tbody > tr > td {
+  text-align: center;
+  padding: 10px;
+}

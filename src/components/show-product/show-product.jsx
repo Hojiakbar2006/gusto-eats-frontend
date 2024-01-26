@@ -8,7 +8,7 @@ export default function Showproduct({ data, img_url }) {
 
   return (
     <div className="food-container">
-      {data.map((item) => {
+      {data?.map((item) => {
         const description = item.description.split(" ").slice(0, 9).join(" ");
         const img =
           item.image && !item.image.startsWith("http")

@@ -7,7 +7,7 @@ export const ACCOUNTS_RESET_PASSWORD = "accounts/reset-password/";
 export const ACCOUNTS_TOKEN_REFRESH = "accounts/token-refresh/";
 export const ACCOUNTS_LOGOUT = "accounts/logout/";
 
-export const PRODUCTS = "api/v1/products/";
+export const PRODUCTS = (query) => `api/v1/products/?${query}`;
 export const PRODUCT_BY_ID = (id) => `products/${id}/`;
 export const CREATE_PRODUCT_REVIEW = (productId) =>
   `products/${productId}/create_review/`;

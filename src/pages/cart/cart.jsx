@@ -16,12 +16,14 @@ import {
 } from "../../redux/slice/cartSlice";
 import { useCreateOrderMutation } from "../../redux/services/orderApi";
 import { red } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { enqueueSnackbar } = useSnackbar();
   const [sendOrder, { isLoading }] = useCreateOrderMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getCartItems());
@@ -44,6 +46,9 @@ const Cart = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
       const { name, phone_number, address } = values;
+      if (!localStorage.getItem("access_token")) {
+        navigate("/login/");
+      }
 
       try {
         const res = await sendOrder({
@@ -65,9 +70,8 @@ const Cart = () => {
           enqueueSnackbar("Buyurtmangiz jo'natildi", {
             variant: "success",
           });
-          localStorage.setItem("access_token", data.access_token);
-          localStorage.setItem("refresh_token", data.refresh_token);
-          dispatch(getCartItems());
+          localStorage.removeItem("cartItems");
+          localStorage.removeItem("cartState");
         }
 
         if (error) {

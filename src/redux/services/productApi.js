@@ -7,7 +7,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery(authHeader()),
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: () => endpoints.PRODUCTS,
+      query: (query) => endpoints.PRODUCTS(query),
     }),
     getRecommendedProducts: builder.query({
       query: () => endpoints.RECOMMENDED_PRODUCTS,

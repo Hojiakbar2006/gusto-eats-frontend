@@ -1,18 +1,23 @@
 import React from "react";
 import "./send-feedback.css";
 import LoadingButton from "@mui/lab/LoadingButton";
-// import SendIcon from "@mui/icons-material/Send";
+import SendIcon from "@mui/icons-material/Send";
 import { Grid, TextField, Box } from "@mui/material";
+import axios from "axios";
 
 export default function SendFeedBack() {
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/feedback/`,
+        data
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="container">
@@ -32,11 +37,13 @@ export default function SendFeedBack() {
                 flexDirection: "column",
                 alignItems: "center",
               }}
+              component="form"
+              onSubmit={handleSubmit}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    name="firstName"
+                    name="first_name"
                     label="First name"
                     required
                     fullWidth
@@ -48,9 +55,10 @@ export default function SendFeedBack() {
                   <TextField
                     required
                     fullWidth
+                    type="text"
                     id="lastName"
                     label="Last Name"
-                    name="lastName"
+                    name="last_name"
                     autoComplete="off"
                   />
                 </Grid>
@@ -59,6 +67,7 @@ export default function SendFeedBack() {
                     required
                     fullWidth
                     id="email"
+                    type="email"
                     label="Email Address"
                     name="email"
                     autoComplete="off"
@@ -78,6 +87,7 @@ export default function SendFeedBack() {
               </Grid>
 
               <LoadingButton
+                type="submit"
                 fullWidth
                 sx={{ height: "50px", bgcolor: "#0b5dd6" }}
                 variant="contained"

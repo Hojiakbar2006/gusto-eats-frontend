@@ -2,9 +2,19 @@ import React from "react";
 import { Banner, Category, ShowProduct } from "../components";
 import { LinearProgress } from "@mui/material";
 import { useGetProductsQuery } from "../redux/services/productApi";
+import { useLocation } from "react-router-dom";
 
 export default function Menu() {
-  const { data, isLoading } = useGetProductsQuery();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const category = queryParams.get("category");
+  const query = queryParams.get("query");
+
+  const { data, isLoading } = useGetProductsQuery(
+    `${query ? "query" : "category"}=${query ? query : category}`
+  );
+
   if (isLoading) {
     return (
       <div className="loading">
@@ -18,7 +28,7 @@ export default function Menu() {
       <Category />
       <div className="container">
         <div className="comp-container" style={{ padding: "20px" }}>
-          <ShowProduct data={data.products} img_url={false} />
+          <ShowProduct data={data?.products} img_url={false} />
         </div>
       </div>
     </>
