@@ -3,7 +3,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 6%;
+  padding: 10px 6%;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   position: sticky;
@@ -29,63 +29,4 @@ nav {
   background: #0b5dd6;
   color: #fff;
   border: 1px solid #0b5dd6;
-}
-
-/* CART MODAL */
-
-.cart-dr {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 20px;
-}
-
-.cart-dr > .box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px;
-  border-radius: 5px;
-  padding: 10px;
-  gap: 20px;
-}
-
-.cart-dr > .box > figure {
-  width: 60px;
-}
-
-.cart-dr > .box > figure > img {
-  width: 100%;
-}
-
-.cart-dr > .box > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.cart-dr > .cart-btn-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.cart-dr > .cart-btn-group > div {
-  display: flex;
-  gap: 10px;
-}
-
-.cart-dr > .cart-btn-group > div > button {
-  border: 1px solid #0b5dd6;
-  padding: 10px;
-}
-
-.cart-dr > .cart-btn-group > div > button > a {
-  text-decoration: none;
-  color: #0b5dd6;
 }

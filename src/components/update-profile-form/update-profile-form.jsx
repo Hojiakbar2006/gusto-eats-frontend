@@ -1,5 +1,8 @@
-import React from "react";
-import { useUpdateProfileMutation } from "../../redux/services/authApi";
+import React, { useState } from "react";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "../../redux/services/authApi";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -10,34 +13,57 @@ import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-export default function UpdateProfileForm({ data }) {
+export default function UpdateProfileForm() {
   const [updateDate, { isLoading: updateLoad }] = useUpdateProfileMutation();
+  const { data } = useGetProfileQuery();
   const { enqueueSnackbar } = useSnackbar();
+  const [value, setValue] = useState(data);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
 
     try {
-      const res = await updateDate(data);
-      const { error, data } = res;
+      const updatedFields = {};
 
-      if (data) {
-        enqueueSnackbar("Ma'lumotlar o'zgartirildi", {
-          variant: "success",
-        });
+      if (data.first_name !== value.first_name) {
+        updatedFields.first_name = value.first_name;
       }
-      if (error) {
-        if (Boolean(error.data.email)) {
-          enqueueSnackbar("Ma'lumotlarni to'ldirishda xatolik", {
+      if (data.last_name !== value.last_name) {
+        updatedFields.last_name = value.last_name;
+      }
+      if (data.email !== value.email) {
+        updatedFields.email = value.email;
+      }
+      if (data.phone_number !== value.phone_number) {
+        updatedFields.phone_number = value.phone_number;
+      }
+
+      if (Object.keys(updatedFields).length > 0) {
+        const res = await updateDate(updatedFields);
+        const { error, data } = res;
+        if (data) {
+          enqueueSnackbar("Ma'lumotlar o'zgartirildi", {
+            variant: "success",
+          });
+        }
+        if (error) {
+          enqueueSnackbar("Ma'lumotlarni o'zgartirishda xatolik", {
             variant: "error",
           });
         }
+      } else {
+        enqueueSnackbar("O'zgartirilgan ma'lumotlar topilmadi", {
+          variant: "info",
+        });
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("Xatolik:", error);
+      enqueueSnackbar("Amaliyotni bajarishda xatolik", {
+        variant: "error",
+      });
     }
   };
+
   return (
     <div className="comp-container">
       <h1>{data.first_name}</h1>
@@ -74,7 +100,10 @@ export default function UpdateProfileForm({ data }) {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  value={data.first_name}
+                  onChange={(e) =>
+                    setValue({ ...value, first_name: e.target.value })
+                  }
+                  value={value.first_name}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -85,7 +114,10 @@ export default function UpdateProfileForm({ data }) {
                   label="Last Name"
                   name="last_name"
                   autoComplete="off"
-                  value={data.last_name}
+                  onChange={(e) =>
+                    setValue({ ...value, last_name: e.target.value })
+                  }
+                  value={value.last_name}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -96,7 +128,10 @@ export default function UpdateProfileForm({ data }) {
                   label="Email Address"
                   name="email"
                   autoComplete="off"
-                  value={data.email}
+                  onChange={(e) =>
+                    setValue({ ...value, email: e.target.value })
+                  }
+                  value={value.email}
                 />
               </Grid>
               <Grid item xs={12} marginBottom={2}>
@@ -108,7 +143,10 @@ export default function UpdateProfileForm({ data }) {
                   type="number"
                   id="phone_number"
                   autoComplete="off"
-                  value={data.phone_number}
+                  onChange={(e) =>
+                    setValue({ ...value, phone_number: e.target.value })
+                  }
+                  value={value.phone_number}
                 />
               </Grid>
             </Grid>

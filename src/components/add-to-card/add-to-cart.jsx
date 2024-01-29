@@ -1,3 +1,4 @@
+import "./add-to-cart.css";
 import { DeleteForeverOutlined } from "@mui/icons-material";
 import { Button, Drawer, IconButton } from "@mui/material";
 import { red } from "@mui/material/colors";
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 import { closeCart } from "../../redux/slice/toggleCartSlice";
 import { useEffect } from "react";
 import { getCartItems, removeFromCart } from "../../redux/slice/cartSlice";
+import { FormatPrice } from "../../utils/formatPrice";
 
 const AddToCart = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const AddToCart = () => {
     <Drawer anchor="right" open={isOpen} onClose={() => dispatch(closeCart())}>
       <div className="cart-dr">
         {cart.cartItems.map((item) => {
+          const name = item.name.split(" ").slice(0, 2).join(" ");
           const img =
             item.image && !item.image.startsWith("http")
               ? `${process.env.REACT_APP_BASE_URL}${item.image}`
@@ -30,7 +33,7 @@ const AddToCart = () => {
                 <img src={img} alt={item.name} />
               </figure>
               <div>
-                <h4>{item.name}</h4>
+                <h6>{name}</h6>
                 {`${item.quantity}x${item.price}`}
               </div>
               <IconButton onClick={() => dispatch(removeFromCart(item))}>
@@ -40,7 +43,7 @@ const AddToCart = () => {
           );
         })}
         <div className="cart-btn-group">
-          <h3>Sub Total: {cart.total}</h3>
+          <h3>Sub Total: {FormatPrice(cart.total)} </h3>
           <div>
             <Button
               variant="contained"

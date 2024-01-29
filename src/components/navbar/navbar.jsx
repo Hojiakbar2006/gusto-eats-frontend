@@ -36,6 +36,14 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/");
+
+    setAnchorEl(null);
+  };
+
   return (
     <nav>
       <Link to="/">
@@ -74,9 +82,7 @@ const Navbar = () => {
               <MenuItem onClick={() => handleMenuItemClick("my-orders/")}>
                 My orders
               </MenuItem>
-              <MenuItem onClick={() => handleMenuItemClick("/")}>
-                Logout
-              </MenuItem>
+              <MenuItem onClick={() => handleLogout}>Logout</MenuItem>
             </Menu>
           </Box>
         ) : (

@@ -17,6 +17,7 @@ import {
 import { useCreateOrderMutation } from "../../redux/services/orderApi";
 import { red } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import { FormatPrice } from "../../utils/formatPrice";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -125,10 +126,6 @@ const Cart = () => {
                 </div>
               );
             })}
-            <h2>
-              Sub total:
-              {cart.total}
-            </h2>
           </>
         ) : (
           <div className="message">
@@ -137,6 +134,10 @@ const Cart = () => {
         )}
       </div>
       <div className="comp-container">
+        <h2>
+          Sub total:
+          {FormatPrice(cart.total)}
+        </h2>
         <Box component="form" onSubmit={formik.handleSubmit} noValidate>
           <TextField
             margin="normal"

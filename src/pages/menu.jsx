@@ -26,11 +26,7 @@ export default function Menu() {
     <>
       <Banner />
       <Category />
-      <div className="container">
-        <div className="comp-container" style={{ padding: "20px" }}>
-          <ShowProduct data={data?.products} img_url={false} />
-        </div>
-      </div>
+      <ShowProduct data={data?.products} img_url={false} />
     </>
   );
 }

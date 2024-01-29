@@ -28,61 +28,30 @@ export default function Footer() {
   };
   return (
     <footer>
-      <div className="left">
+      <div>
         <div>
-          <Link to="/">
-            <img width="150px" src={logo} alt="" />
+          <Link>
+            <IconButton size="small">
+              <Facebook sx={{ fontSize: 40 }} />
+            </IconButton>
           </Link>
-          <p>
-            Our job is to filling your tummy with delicious food and with fast
-            and free delivery.
-          </p>
-          <div>
-            <Link>
-              <IconButton size="small">
-                <Facebook sx={{ fontSize: 40 }} />
-              </IconButton>
-            </Link>
-            <Link>
-              <IconButton size="small">
-                <Instagram sx={{ fontSize: 40 }} />
-              </IconButton>
-            </Link>
-            <Link>
-              <IconButton size="small">
-                <YouTube sx={{ fontSize: 40 }} />
-              </IconButton>
-            </Link>
-            <Link>
-              <IconButton size="small">
-                <Telegram sx={{ fontSize: 40 }} />
-              </IconButton>
-            </Link>
-          </div>
+          <Link>
+            <IconButton size="small">
+              <Instagram sx={{ fontSize: 40 }} />
+            </IconButton>
+          </Link>
+          <Link>
+            <IconButton size="small">
+              <YouTube sx={{ fontSize: 40 }} />
+            </IconButton>
+          </Link>
+          <Link>
+            <IconButton size="small">
+              <Telegram sx={{ fontSize: 40 }} />
+            </IconButton>
+          </Link>
         </div>
         <div>
-          <p className="footer-title">Store</p>
-          <Link>About us</Link>
-          <Link>Find store</Link>
-          <Link>Categories</Link>
-          <Link>Blogs</Link>
-        </div>
-        <div>
-          <p className="footer-title">Information</p>
-          <Link>Help center</Link>
-          <Link>Money refund</Link>
-          <Link>Shipping info</Link>
-          <Link>Refunds</Link>
-        </div>
-        <div>
-          <p className="footer-title">Support</p>
-          <Link>Help center</Link>
-          <Link>Documents</Link>
-          <Link>Account restore</Link>
-          <Link>My Orders</Link>
-        </div>
-        <div>
-          <p className="footer-title">Support</p>
           <a href="tel:+998993250628">
             <Phone />
             +998 (99) 325-0628
@@ -94,7 +63,7 @@ export default function Footer() {
         </div>
       </div>
       <div>
-        <p>© 2018- 2023 Templatemount.All rights reserved.</p>
+        <p>© 2024- 2030 All rights reserved.</p>
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel size="small" id="demo-simple-select-label">
             Language
