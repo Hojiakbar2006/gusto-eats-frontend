@@ -1,0 +1,29 @@
+.table-card{
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    position: relative;
+}
+
+.table-card::-webkit-scrollbar{
+    display: none;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.custom-table thead {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+}
+

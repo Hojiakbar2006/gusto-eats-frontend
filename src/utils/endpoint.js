@@ -24,7 +24,7 @@ export const DELETE_ORDER = (id) => `orders/${id}/`;
 
 export const USERS = "accounts/users/";
 export const USER_BY_ID = (id) => `accounts/users/${id}/`;
-export const USERS_STAFF = "api/v1/accounts/users_staff/";
+export const USERS_STAFF = "accounts/users_staff/";
 
 export const CREATE_PRODUCT = "api/v1/products/";
 export const DELETE_PRODUCT = (id) => `products/${id}/`;

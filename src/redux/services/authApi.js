@@ -5,6 +5,9 @@ import * as endpoints from "../../utils/endpoint";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery(authHeader()),
+
+  tagTypes: ["update"],
+
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
@@ -13,6 +16,7 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
+
     register: builder.mutation({
       query: (userData) => ({
         url: endpoints.ACCOUNTS_REGISTER,
@@ -20,16 +24,21 @@ export const authApi = createApi({
         body: userData,
       }),
     }),
+
     getProfile: builder.query({
       query: () => endpoints.ACCOUNTS_PROFILE,
+      providesTags: ["update"],
     }),
+
     updateProfile: builder.mutation({
       query: (updatedData) => ({
         url: endpoints.ACCOUNTS_PROFILE_UPDATE,
         method: "PATCH",
         body: updatedData,
       }),
+      invalidatesTags: ["update"],
     }),
+
     sendOtp: builder.mutation({
       query: (email) => ({
         url: endpoints.ACCOUNTS_SEND_OTP,
@@ -37,6 +46,7 @@ export const authApi = createApi({
         body: { email },
       }),
     }),
+
     resetPassword: builder.mutation({
       query: (resetData) => ({
         url: endpoints.ACCOUNTS_RESET_PASSWORD,
@@ -44,6 +54,7 @@ export const authApi = createApi({
         body: resetData,
       }),
     }),
+
     logout: builder.mutation({
       query: () => ({
         url: endpoints.ACCOUNTS_LOGOUT,

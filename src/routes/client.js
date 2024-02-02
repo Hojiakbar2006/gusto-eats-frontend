@@ -1,7 +1,13 @@
 import React from "react";
-import { AddToCart, Footer, Login, Navbar, Register } from "../components";
+import {
+  AddToCart,
+  Footer,
+  Login,
+  Navbar,
+  Register,
+} from "../client/components";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import { Home, Menu, Cart, Profile } from "../pages";
+import { Home, Menu, Cart, Profile } from "../client/pages";
 
 export default function Client() {
   return (

@@ -5,11 +5,13 @@ import { authApi } from "./services/authApi";
 import { forAdminApi } from "./services/forAdminApi";
 import { productApi } from "./services/productApi";
 import { orderApi } from "./services/orderApi";
+import authReducer from "./slice/authSlice";
 
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     menu: menuReducer,
+    auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [productApi.reducerPath]: productApi.reducer,

@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -16,7 +17,6 @@ body {
   max-width: 1500px;
   width: 100%;
   min-height: 100vh;
-
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -148,4 +148,11 @@ input::-webkit-inner-spin-button {
   position: fixed;
   top: 0;
   z-index: 12;
+}
+
+.main-row{
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
 }
