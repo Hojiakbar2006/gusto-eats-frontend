@@ -26,7 +26,7 @@ export default function Menu() {
     <>
       <Banner />
       <Category />
-      <ShowProduct data={data?.products} img_url={false} />
+      <ShowProduct data={data?.products} />
     </>
   );
 }

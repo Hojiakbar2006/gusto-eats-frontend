@@ -1,7 +1,4 @@
 .cat-container {
-  position: sticky;
-  left: 0;
-  top: 83px;
   z-index: 1;
   background: #e9ecef;
   padding: 5px 0 0 0;
