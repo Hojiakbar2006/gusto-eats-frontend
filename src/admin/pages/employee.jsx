@@ -1,21 +1,12 @@
 import React from "react";
 import Table from "../components/table/table";
-import { LinearProgress } from "@mui/material";
-import {
-  useGetUsersStaffQuery,
-} from "../../redux/services/forAdminApi";
+import { Skeleton } from "@mui/material";
+import { useGetUsersStaffQuery } from "../../redux/services/forAdminApi";
 
 export default function Employee() {
-  const { data, isLoading } = useGetUsersStaffQuery();
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
-  }
+  const { data } = useGetUsersStaffQuery();
+  const skeletonArray = Array.from({ length: 9 }, (_, index) => index + 1);
 
-  console.log(data);
   return (
     <div className="dashboard-container comp-container">
       <div className="route comp-container">
@@ -33,10 +24,10 @@ export default function Employee() {
             </tr>
           </thead>
           <tbody>
-            {data.message ? (
-              <h2 style={{padding:"20px"}}>{data.message}</h2>
+            {data?.message ? (
+              <h2 style={{ padding: "20px" }}>{data.message}</h2>
             ) : (
-              data.map((item) => {
+              data?.map((item) => {
                 return (
                   <tr key={item.id}>
                     <td>{item.first_name}</td>
@@ -45,7 +36,23 @@ export default function Employee() {
                     <td>{item.phone_number}</td>
                   </tr>
                 );
-              })
+              }) ??
+              skeletonArray.map((item) => (
+                <tr key={item}>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </Table>

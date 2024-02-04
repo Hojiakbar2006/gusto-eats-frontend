@@ -15,8 +15,9 @@ const AddToCart = () => {
   const cart = useSelector((state) => state.cart);
   const isOpen = useSelector((state) => state.menu.isOpen);
 
-  useEffect(() => dispatch(getCartItems()), [dispatch]);
-
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, [dispatch]);
   return (
     <Drawer anchor="right" open={isOpen} onClose={() => dispatch(closeCart())}>
       <div className="cart-dr">

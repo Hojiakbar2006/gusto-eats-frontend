@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { authHeader } from "./header";
 import * as endpoints from "../../utils/endpoint";
+import apiService from "./apiService";
 
-export const forAdminApi = createApi({
-  reducerPath: "forAdminApi",
-  baseQuery: fetchBaseQuery(authHeader()),
+export const forAdminApi = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => endpoints.USERS,

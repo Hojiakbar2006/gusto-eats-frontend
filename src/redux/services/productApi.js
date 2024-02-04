@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { authHeader } from "./header";
 import * as endpoints from "../../utils/endpoint";
+import apiService from "./apiService";
 
-export const productApi = createApi({
-  reducerPath: "productApi",
-  baseQuery: fetchBaseQuery(authHeader()),
+export const productApi = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (query) => endpoints.PRODUCTS(query),

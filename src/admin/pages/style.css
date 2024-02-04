@@ -31,14 +31,14 @@
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
-.route > button:hover{
+.route > button:hover {
   background: #0b5cd68d;
 }
 
-.route > button:active{
+.route > button:active {
   background: #0b5dd6;
 }
 
@@ -58,7 +58,6 @@
   gap: 10px;
   align-items: center;
   justify-content: center;
-  /* background: #0b5dd6; */
   background-color: #f2f2f2;
 }
 
@@ -71,4 +70,12 @@
 .card > h1 > a:hover {
   text-decoration: none;
   color: #191919a7;
+}
+
+.card > h1 {
+  min-width: 60%;
+}
+
+.card > h2 {
+  min-width: 20%;
 }

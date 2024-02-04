@@ -4,9 +4,9 @@ import Admin from "./routes/admin";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const isAdmin = useSelector((state)=>state.auth.isAdmin)
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   return <>{isAdmin ? <Admin /> : <Client />}</>;
 };
 
-export default App
+export default App;

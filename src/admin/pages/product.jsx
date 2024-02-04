@@ -1,18 +1,12 @@
 import React from "react";
 import { useGetProductsQuery } from "../../redux/services/productApi";
 import Table from "../components/table/table";
-import { LinearProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 export default function Product() {
-  const { data, isLoading } = useGetProductsQuery();
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
-  }
-  console.log(data);
+  const { data } = useGetProductsQuery();
+  const skeletonArray = Array.from({ length: 9 }, (_, index) => index + 1);
+
   return (
     <div className="dashboard-container comp-container">
       <div className="route comp-container">
@@ -32,7 +26,7 @@ export default function Product() {
             </tr>
           </thead>
           <tbody>
-            {data.products.map((item) => {
+            {data?.products.map((item) => {
               const date = new Date(item.createdAt);
 
               // Format the date using Intl.DateTimeFormat
@@ -61,7 +55,29 @@ export default function Product() {
                   <td>{item.rating}</td>
                 </tr>
               );
-            })}
+            }) ??
+              skeletonArray.map((item) => (
+                <tr key={item}>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </div>

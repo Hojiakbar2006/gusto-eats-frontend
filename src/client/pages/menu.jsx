@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Banner, Category, ShowProduct } from "../components";
-import { LinearProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useGetProductsQuery } from "../../redux/services/productApi";
 import { useLocation } from "react-router-dom";
 
@@ -14,19 +14,30 @@ export default function Menu() {
   const { data, isLoading } = useGetProductsQuery(
     `${query ? "query" : "category"}=${query ? query : category}`
   );
+  const types = [...new Set(data?.products.map((item) => item.type) ?? null)];
+  const elementRefs = useRef(types.map(() => React.createRef()));
 
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
-  }
   return (
     <>
       <Banner />
-      <Category />
-      <ShowProduct data={data?.products} />
+
+      {!isLoading ? (
+        <Category />
+      ) : (
+        <div className="container">
+          <div className="comp-container">
+            <div className="category">
+              <Skeleton width="100%" height={50} />
+            </div>
+          </div>
+        </div>
+      )}
+      <ShowProduct
+        data={data?.products}
+        types={types}
+        elementRefs={elementRefs}
+        isLoading={isLoading}
+      />
     </>
   );
 }

@@ -1,13 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { authHeader } from "./header";
 import * as endpoints from "../../utils/endpoint";
+import apiService from "./apiService";
 
-export const orderApi = createApi({
-  reducerPath: "orderApi",
-  baseQuery: fetchBaseQuery(authHeader()),
-
-  tagTypes: ["updaate"],
-
+export const orderApi = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query({
       query: () => endpoints.ORDERS,

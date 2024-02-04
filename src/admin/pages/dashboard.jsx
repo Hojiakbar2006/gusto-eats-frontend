@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Table from "../components/table/table";
 import { useGetOrdersQuery } from "../../redux/services/orderApi";
-import { LinearProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import {
   useGetCategoriesQuery,
   useGetProductsQuery,
@@ -19,7 +19,6 @@ export default function Dashboard() {
   const { data: users, isLoading: userLoad } = useGetUsersQuery();
   const { data: usersStaff, isLoading: userStaffLoad } =
     useGetUsersStaffQuery();
-
 
   const card = [
     {
@@ -47,14 +46,10 @@ export default function Dashboard() {
       link: "/staff-users",
     },
   ];
+  const skeletonArray = Array.from({ length: 6 }, (_, index) => index + 1);
 
-  if (orderLoad || productLoad || categoryLoad || userLoad || userStaffLoad) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
-  }
+  let load =
+    orderLoad || productLoad || categoryLoad || userLoad || userStaffLoad;
 
   return (
     <div className="dashboard-container comp-container">
@@ -62,14 +57,25 @@ export default function Dashboard() {
         <h2>Dashboard</h2>
       </div>
       <div className="card-container">
-        {card.map(({ id, name, count, link }) => (
-          <div className="comp-container card" key={id}>
-            <h1>
-              <Link to={link}>{name}</Link>
-            </h1>
-            <h2>{count}</h2>
-          </div>
-        ))}
+        {card.map(({ id, name, count, link }) => {
+          return load ? (
+            <div className="comp-container card" key={id}>
+              <h1>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h1>
+              <h2>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h2>
+            </div>
+          ) : (
+            <div className="comp-container card" key={id}>
+              <h1>
+                <Link to={link}>{name}</Link>
+              </h1>
+              <h2>{count}</h2>
+            </div>
+          );
+        })}
       </div>
       <div className="table-card comp-container">
         <Table>
@@ -83,7 +89,7 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((item) => {
+            {orders?.map((item) => {
               const date = new Date(item.createdAt);
 
               // Format the date using Intl.DateTimeFormat
@@ -106,7 +112,26 @@ export default function Dashboard() {
                   <td>{item.totalPrice}</td>
                 </tr>
               );
-            })}
+            }) ??
+              skeletonArray.map((item) => (
+                <tr key={item}>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </div>

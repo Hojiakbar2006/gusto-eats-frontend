@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -42,7 +42,6 @@ export default function Login() {
       try {
         const { data, error } = await login(values);
         if (data) {
-          console.log(data);
           enqueueSnackbar("Login successful", {
             variant: "success",
           });

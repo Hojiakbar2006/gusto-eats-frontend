@@ -1,17 +1,12 @@
 import React from "react";
 import Table from "../components/table/table";
-import { LinearProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useGetUsersQuery } from "../../redux/services/forAdminApi";
 
 export default function Customer() {
-  const { data, isLoading } = useGetUsersQuery();
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
-  }
+  const { data } = useGetUsersQuery();
+  const skeletonArray = Array.from({ length: 9 }, (_, index) => index + 1);
+
   console.log(data);
   return (
     <div className="dashboard-container comp-container">
@@ -30,10 +25,10 @@ export default function Customer() {
             </tr>
           </thead>
           <tbody>
-            {data.message ? (
+            {data?.message ? (
               <h2 style={{ padding: "20px" }}>{data.message}</h2>
             ) : (
-              data.map((item) => {
+              data?.map((item) => {
                 return (
                   <tr key={item.id}>
                     <td>{item.first_name}</td>
@@ -42,7 +37,23 @@ export default function Customer() {
                     <td>{item.phone_number}</td>
                   </tr>
                 );
-              })
+              }) ??
+              skeletonArray.map((item) => (
+                <tr key={item}>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                  <td>
+                    <Skeleton width="100%" height={30} />
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </Table>
