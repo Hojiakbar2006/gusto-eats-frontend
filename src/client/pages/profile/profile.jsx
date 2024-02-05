@@ -1,9 +1,9 @@
 import React from "react";
 import "./profile.css";
-import { useGetProfileQuery } from "../../../redux/services/authApi";
 import { LinearProgress } from "@mui/material";
 import { UpdateProfileForm } from "../../components";
-import { useGetOrdersQuery } from "../../../redux/services/orderApi";
+import { useGetProfileQuery } from "../../../app/api/endpoints/auth";
+import { useGetOrdersQuery } from "../../../app/api/endpoints/order";
 
 export default function Profile() {
   const {

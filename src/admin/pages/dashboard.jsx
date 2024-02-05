@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Table from "../components/table/table";
-import { useGetOrdersQuery } from "../../redux/services/orderApi";
 import { Skeleton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setOrder } from "../../app/slice/orderItemSlice";
+import { useGetOrdersQuery } from "../../app/api/endpoints/order";
 import {
   useGetCategoriesQuery,
   useGetProductsQuery,
-} from "../../redux/services/productApi";
+} from "../../app/api/endpoints/product";
 import {
   useGetUsersQuery,
   useGetUsersStaffQuery,
-} from "../../redux/services/forAdminApi";
+} from "../../app/api/endpoints/forAdmin";
 
 export default function Dashboard() {
+  const dispatch = useDispatch();
   const { data: orders, isLoading: orderLoad } = useGetOrdersQuery();
   const { data: products, isLoading: productLoad } = useGetProductsQuery();
   const { data: categories, isLoading: categoryLoad } = useGetCategoriesQuery();
@@ -99,13 +102,17 @@ export default function Dashboard() {
                 day: "numeric",
                 hour: "numeric",
                 minute: "numeric",
-                // second: "numeric",
-                // timeZoneName: "short",
               }).format(date);
 
               return (
                 <tr key={item.id}>
-                  <td>{item.name}</td>
+                  <td
+                    onClick={() => {
+                      dispatch(setOrder({ open: true, order: item }));
+                    }}
+                  >
+                    {item.name}
+                  </td>
                   <td>{item.phone_number}</td>
                   <td>{item.shippingAddress.address}</td>
                   <td>{formattedDate}</td>

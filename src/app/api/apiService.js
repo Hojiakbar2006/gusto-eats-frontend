@@ -15,5 +15,4 @@ export const apiService = createApi({
 
   endpoints: (builder) => ({}),
 });
-
 export default apiService;

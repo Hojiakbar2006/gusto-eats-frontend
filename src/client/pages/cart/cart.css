@@ -1,7 +1,15 @@
+.cart {
+  min-height: calc(100vh - 400px);
+  display: grid;
+  place-items: center;
+}
+
 .cart-container {
   width: 100%;
-  display: flex;
-  padding: 20px 6%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 500px;
+  padding: 15px 6%;
   gap: 20px;
 }
 
@@ -10,18 +18,15 @@
 }
 
 .cart-container > :first-child {
-  width: 70%;
   background: #ffffff;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow: scroll;
 }
 
 .cart-container > :last-child {
-  width: 30%;
-  height: 0%;
-  min-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "../components/table/table";
 import { Skeleton } from "@mui/material";
-import { useGetUsersStaffQuery } from "../../redux/services/forAdminApi";
+import { useGetUsersStaffQuery } from "../../app/api/endpoints/forAdmin";
 
 export default function Employee() {
   const { data } = useGetUsersStaffQuery();

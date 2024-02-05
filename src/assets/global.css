@@ -150,7 +150,7 @@ input::-webkit-inner-spin-button {
   z-index: 12;
 }
 
-.main-row{
+.main-row {
   display: flex;
   align-items: flex-start;
   gap: 20px;

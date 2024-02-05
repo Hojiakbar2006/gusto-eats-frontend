@@ -1,5 +1,5 @@
-import * as endpoints from "../../utils/endpoint";
-import apiService from "./apiService";
+import * as endpoints from "../../../utils/endpoint";
+import apiService from "../apiService"
 
 export const orderApi = apiService.injectEndpoints({
   endpoints: (builder) => ({

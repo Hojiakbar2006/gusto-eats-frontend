@@ -2,13 +2,12 @@ import { Button, Drawer, IconButton } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { closeCart } from "../../../redux/slice/toggleCartSlice";
 import { useEffect } from "react";
-import { getCartItems, removeFromCart } from "../../../redux/slice/cartSlice";
 import { FormatPrice } from "../../../utils/formatPrice";
-
 import "./add-to-cart.css";
 import { DeleteForeverOutlined } from "@mui/icons-material";
+import { closeCart } from "../../../app/slice/toggleCartSlice";
+import { getCartItems, removeFromCart } from "../../../app/slice/cartSlice";
 
 const AddToCart = () => {
   const dispatch = useDispatch();

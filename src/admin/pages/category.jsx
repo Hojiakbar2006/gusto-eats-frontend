@@ -1,7 +1,7 @@
 import React from "react";
-import { useGetCategoriesQuery } from "../../redux/services/productApi";
 import Table from "../components/table/table";
 import { Skeleton } from "@mui/material";
+import { useGetCategoriesQuery } from "../../app/api/endpoints/product";
 
 export default function Category() {
   const { data } = useGetCategoriesQuery();

@@ -1,7 +1,7 @@
 import React from "react";
-import { useGetProductsQuery } from "../../redux/services/productApi";
 import Table from "../components/table/table";
 import { Skeleton } from "@mui/material";
+import { useGetProductsQuery } from "../../app/api/endpoints/product";
 
 export default function Product() {
   const { data } = useGetProductsQuery();

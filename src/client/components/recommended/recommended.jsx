@@ -2,11 +2,11 @@ import React from "react";
 import "./recommended.css";
 import { Link } from "react-router-dom";
 import { Button, IconButton, Rating, Skeleton } from "@mui/material";
-import { useGetRecommendedProductsQuery } from "../../../redux/services/productApi";
-import { addToCart } from "../../../redux/slice/cartSlice";
+import { addToCart } from "../../../app/slice/cartSlice";
 import { useDispatch } from "react-redux";
 import { FormatPrice } from "../../../utils/formatPrice";
 import { AddShoppingCart } from "@mui/icons-material";
+import { useGetRecommendedProductsQuery } from "../../../app/api/endpoints/product";
 
 export default function Recommended() {
   const { data } = useGetRecommendedProductsQuery();

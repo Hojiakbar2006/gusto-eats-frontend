@@ -5,7 +5,7 @@ import logo from "../../../assets/icons/logo.png";
 import { Avatar, Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Person } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { removeAdminStatus, removeTokens } from "../../../redux/slice/authSlice";
+import { removeAdminStatus, removeTokens } from "../../../app/slice/authSlice";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);

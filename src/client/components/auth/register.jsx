@@ -9,8 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRegisterMutation } from "../../../redux/services/authApi";
 import { LoadingButton } from "@mui/lab";
+import { useRegisterMutation } from "../../../app/api/endpoints/auth";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),

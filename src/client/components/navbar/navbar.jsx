@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../../redux/slice/cartSlice";
-import { openCart } from "../../../redux/slice/toggleCartSlice";
+import { getCartItems } from "../../../app/slice/cartSlice";
+import { openCart } from "../../../app/slice/toggleCartSlice";
 import logo from "../../../assets/icons/logo.png";
-import { removeAdminStatus, removeTokens } from "../../../redux/slice/authSlice";
+import { removeAdminStatus, removeTokens } from "../../../app/slice/authSlice";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);

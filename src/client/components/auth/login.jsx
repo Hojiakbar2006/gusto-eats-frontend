@@ -10,9 +10,9 @@ import { useSnackbar } from "notistack";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
-import { useLoginMutation } from "../../../redux/services/authApi";
 import { useDispatch } from "react-redux";
-import { setAdminStatus, setTokens } from "../../../redux/slice/authSlice";
+import { setAdminStatus, setTokens } from "../../../app/slice/authSlice";
+import { useLoginMutation } from "../../../app/api/endpoints/auth";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),

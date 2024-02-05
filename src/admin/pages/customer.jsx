@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "../components/table/table";
 import { Skeleton } from "@mui/material";
-import { useGetUsersQuery } from "../../redux/services/forAdminApi";
+import { useGetUsersQuery } from "../../app/api/endpoints/forAdmin";
 
 export default function Customer() {
   const { data } = useGetUsersQuery();

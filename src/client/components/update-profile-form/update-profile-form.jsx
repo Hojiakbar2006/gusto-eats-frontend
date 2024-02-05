@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from "../../../redux/services/authApi";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -12,6 +8,7 @@ import Container from "@mui/material/Container";
 import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { useGetProfileQuery, useUpdateProfileMutation } from "../../../app/api/endpoints/auth";
 
 export default function UpdateProfileForm() {
   const [updateDate, { isLoading: updateLoad }] = useUpdateProfileMutation();

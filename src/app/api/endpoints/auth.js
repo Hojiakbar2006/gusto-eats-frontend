@@ -1,5 +1,5 @@
-import * as endpoints from "../../utils/endpoint";
-import apiService from "./apiService";
+import * as endpoints from "../../../utils/endpoint";
+import apiService from "../apiService";
 
 export const authApi = apiService.injectEndpoints({
   endpoints: (builder) => ({

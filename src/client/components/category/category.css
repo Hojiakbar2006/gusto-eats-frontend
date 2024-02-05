@@ -38,15 +38,15 @@
   transition: 0.2s ease;
 }
 
-.category > div > .active {
+.cat-btn.active {
   background: #0b5dd6;
   color: #fff;
 }
 
-.category > div > button:hover {
+.cat-btn:hover {
   background: #014fc4;
   color: #fff;
 }
-.category > div > button:active {
+.cat-btn:active {
   background: #0b5dd6;
 }

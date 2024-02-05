@@ -3,16 +3,25 @@ import "./send-feedback.css";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Grid, TextField, Box } from "@mui/material";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 export default function SendFeedBack() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/feedback/`,
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/feedback/`,
         data
       );
+      if (res.status === 201) {
+        enqueueSnackbar("Feedback has been sended", {
+          variant: "success",
+        });
+        event.target.reset();
+      }
     } catch (err) {
       console.log(err);
     }
