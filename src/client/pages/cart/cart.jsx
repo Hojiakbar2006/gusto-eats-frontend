@@ -140,7 +140,9 @@ const Cart = () => {
             {FormatPrice(cart.total)}
           </h2>
           <h3>
-            {cart.cartItems.length > 1
+            {cart.cartItems.length === 0
+              ? "No Items"
+              : cart.cartItems.length > 1
               ? `${cart.cartItems.length} Items in your cart`
               : `${cart.cartItems.length} Item in your cart`}
           </h3>
