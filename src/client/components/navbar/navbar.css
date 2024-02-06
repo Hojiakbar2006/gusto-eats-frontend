@@ -12,6 +12,10 @@ nav {
   z-index: 2;
 }
 
+.logo {
+  width: 200px;
+}
+
 .list-items {
   display: flex;
   align-items: center;
@@ -19,7 +23,7 @@ nav {
 }
 
 .list-items > a {
-  padding: 9px;
+  padding: 8px 15px;
   border-radius: 5px;
   text-decoration: none;
   border: 1px solid #0b5dd6;
@@ -29,4 +33,28 @@ nav {
   background: #0b5dd6;
   color: #fff;
   border: 1px solid #0b5dd6;
+}
+
+@media screen and (max-width: 1000px) {
+  .logo {
+    width: 180px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .logo {
+    width: 160px;
+  }
+  /* button {
+    font-size: 16px;
+  } */
+}
+@media screen and (max-width: 700px) {
+  .logo {
+    width: 140px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .logo {
+    width: 100px;
+  }
 }

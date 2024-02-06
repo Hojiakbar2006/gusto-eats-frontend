@@ -1,34 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import "./category.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../../app/api/endpoints/product";
 import { Skeleton } from "@mui/material";
 
-const Category = ({ setIsAboveViewport }) => {
+const Category = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetCategoriesQuery();
+  const { data, isLoading, isError } = useGetCategoriesQuery();
   const categoryRef = useRef(null);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
 
-  const handleScroll = () => {
-    if (categoryRef.current) {
-      const elementTop = categoryRef.current.getBoundingClientRect().bottom;
-      setIsAboveViewport(elementTop < 0);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
       <div className="container">
         <div className="comp-container">
@@ -39,6 +24,7 @@ const Category = ({ setIsAboveViewport }) => {
       </div>
     );
   }
+
   return (
     <div className="cat-container" ref={categoryRef}>
       <div className="container">
@@ -51,7 +37,7 @@ const Category = ({ setIsAboveViewport }) => {
               >
                 All
               </button>
-              {data.map((item) => (
+              {data?.map((item) => (
                 <button
                   className={
                     item.name === category ? "cat-btn active" : "cat-btn"

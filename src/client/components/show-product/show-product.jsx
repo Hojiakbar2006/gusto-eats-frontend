@@ -1,22 +1,37 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { FormatPrice } from "../../../utils/formatPrice";
 import { addToCart } from "../../../app/slice/cartSlice";
 import { IconButton, Rating, Skeleton } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
+import { useLocation } from "react-router-dom";
+import { useGetProductsQuery } from "../../../app/api/endpoints/product";
 
-const ShowProduct = ({ data, types, isLoading }) => {
+const ShowProduct = () => {
   const dispatch = useDispatch();
-  const skeletonArray = Array.from({ length: 9 }, (_, index) => index + 1);
-  const elementRefs = useRef(types.map(() => React.createRef()));
-  const scrollToTop = (index) => {
-    elementRefs.current[index]?.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const location = useLocation();
 
-  if (isLoading) {
+  const category = new URLSearchParams(location.search).get("category");
+  const query = new URLSearchParams(location.search).get("query");
+
+  const { data, isLoading, isError } = useGetProductsQuery(
+    `${query ? "query" : "category"}=${query ? query : category}`
+  );
+
+  const types = data?.products
+    ? [...new Set(data?.products.map((item) => item.type))]
+    : [];
+  const skeletonArray = Array.from({ length: 3 }, (_, index) => index + 1);
+
+  if (isLoading || isError) {
     return skeletonArray.map((item) => (
       <div className="container" key={item}>
         <div className="comp-container" style={{ padding: "20px" }}>
+          <div className="title">
+            <Skeleton
+              style={{ width: "200px", height: "50px", marginBottom: "30px" }}
+            />
+          </div>
           <div className="food-container">
             {skeletonArray.map((_, index) => (
               <div key={index} className="box">
@@ -45,22 +60,17 @@ const ShowProduct = ({ data, types, isLoading }) => {
     ));
   }
 
-  return types.length > 0 ? (
-    types.map((type, index) => (
-      <div
-        key={type}
-        className="container"
-        ref={elementRefs.current[index]}
-        onClick={() => scrollToTop(index)}
-      >
+  return types?.length > 0 ? (
+    types.map((type) => (
+      <div key={type} className="container">
         <div className="comp-container" style={{ padding: "20px" }}>
           <div className="title">
             <h1 style={{ marginBottom: "30px" }}>{type}</h1>
           </div>
           <div className="food-container">
-            {data
-              .filter((item) => item.type === type)
-              .map((item) => (
+            {data.products
+              ?.filter((item) => item.type === type)
+              ?.map((item) => (
                 <div key={item.id} className="box">
                   <figure>
                     <img src={item.image} alt="" />
@@ -71,7 +81,7 @@ const ShowProduct = ({ data, types, isLoading }) => {
                   <div className="box-items">
                     <h2>{item.name}</h2>
                     <p>{item.description.split(" ").slice(0, 12).join(" ")}</p>
-                    <Rating name="read-only" value={3} readOnly />
+                    <Rating size="small" name="read-only" value={3} readOnly />
                     <div className="group">
                       <p>{FormatPrice(item.price)}</p>
                       <IconButton
@@ -83,7 +93,7 @@ const ShowProduct = ({ data, types, isLoading }) => {
                     </div>
                   </div>
                 </div>
-              ))}
+              )) ?? "salom"}
           </div>
         </div>
       </div>

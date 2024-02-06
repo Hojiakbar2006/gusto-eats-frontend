@@ -1,14 +1,16 @@
 .cat-container {
   z-index: 1;
   background: #e9ecef;
-  padding: 5px 0 0 0;
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  z-index: 111;
 }
 .category {
-  /* height: 60px; */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
   background: #fff;
 }
 

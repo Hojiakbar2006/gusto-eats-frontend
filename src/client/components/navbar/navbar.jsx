@@ -47,7 +47,7 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/">
-        <img width="200px" src={logo} alt="Logo" />
+        <img className="logo" src={logo} alt="Logo" />
       </Link>
       <div className="list-items">
         {/* <Chip

@@ -44,6 +44,7 @@ const Cart = () => {
       phone_number: "",
       address: "",
     },
+    
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
       const { name, phone_number, address } = values;

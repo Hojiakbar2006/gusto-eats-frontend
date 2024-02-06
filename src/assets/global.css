@@ -23,7 +23,6 @@ body {
   gap: 20px;
 }
 
-/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -70,9 +69,6 @@ input::-webkit-inner-spin-button {
 
 .food-container {
   width: 100%;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* justify-content: center; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
@@ -155,4 +151,108 @@ input::-webkit-inner-spin-button {
   align-items: flex-start;
   gap: 20px;
   padding: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .food-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .food-container > .box > figure {
+    height: 130px;
+  }
+  .box-items > h2 {
+    font-size: 18px;
+  }
+
+  .box-items > p {
+    font-size: 12px;
+  }
+
+  .box-items > .group > p {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .food-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .food-container > .box > figure {
+    height: 150px;
+  }
+
+  .title > h1 {
+    font-size: 38px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .food-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .box-items {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .food-container > .box > figure {
+    height: 150px;
+  }
+
+  .food-container > .box > figure {
+    height: 100px;
+  }
+  .box-items > h2 {
+    font-size: 14px;
+  }
+
+  .box-items > p {
+    font-size: 10px;
+  }
+
+  .box-items > .group > p {
+    font-size: 16px;
+  }
+  .title > h1 {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .food-container {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .box-items {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .food-container > .box > figure {
+    height: 150px;
+  }
+
+  .food-container > .box > figure {
+    height: 150px;
+  }
+  .box-items > h2 {
+    font-size: 16px;
+  }
+
+  .box-items > p {
+    font-size: 12px;
+  }
+
+  .box-items > .group > p {
+    font-size: 16px;
+  }
+  .title > h1 {
+    font-size: 28px;
+  }
 }
