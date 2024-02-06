@@ -29,3 +29,111 @@
 .banner > div > p {
   font-size: 24px;
 }
+
+@media screen and (max-width: 1000px) {
+  .banner > div > h1 {
+    font-size: 40px;
+  }
+
+  .banner > div > p {
+    font-size: 18px;
+  }
+
+  .banner {
+    height: 300px;
+  }
+
+  .banner > div > form {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .banner > div > h1 {
+    font-size: 34px;
+  }
+
+  .banner > div > p {
+    font-size: 15px;
+  }
+
+  .banner {
+    height: 280px;
+  }
+
+  .banner > div > form {
+    width: 80%;
+  }
+
+  .banner > div > form > .MuiInputBase-root,
+  .MuiButtonBase-root {
+    height: 35px !important;
+    font-size: 14px !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .banner > div > h1 {
+    font-size: 34px;
+  }
+
+  .banner > div > p {
+    font-size: 15px;
+  }
+
+  .banner {
+    height: 280px;
+  }
+
+  .banner > div > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+  }
+
+  .banner > div > form > .MuiInputBase-root,
+  .MuiButtonBase-root {
+    height: 35px !important;
+    font-size: 14px !important;
+  }
+
+  .banner > div > form > .MuiButtonBase-root {
+    width: 100px !important;
+    font-size: 12px !important;
+    text-transform: capitalize;
+  }
+}
+@media screen and (max-width: 500px) {
+  .banner > div > h1 {
+    display: none;
+  }
+
+  .banner > div > p {
+    display: none;
+  }
+
+  .banner {
+    height: auto;
+    padding: 20px;
+  }
+
+  .banner > div > form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .banner > div > form > .MuiInputBase-root,
+  .MuiButtonBase-root {
+    height: 35px !important;
+    font-size: 14px !important;
+  }
+
+  .banner > div > form > .MuiButtonBase-root {
+    width: 100px !important;
+    font-size: 12px !important;
+    text-transform: capitalize;
+  }
+}

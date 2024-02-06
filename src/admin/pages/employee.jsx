@@ -2,6 +2,7 @@ import React from "react";
 import Table from "../components/table/table";
 import { Skeleton } from "@mui/material";
 import { useGetUsersStaffQuery } from "../../app/api/endpoints/forAdmin";
+import { FormatDate } from "../../utils/formatDate";
 
 export default function Employee() {
   const { data } = useGetUsersStaffQuery();
@@ -21,6 +22,8 @@ export default function Employee() {
               <th>Last name</th>
               <th>Email</th>
               <th>Phone number</th>
+              <th>Last login</th>
+              <th>Created at</th>
             </tr>
           </thead>
           <tbody>
@@ -28,12 +31,16 @@ export default function Employee() {
               <h2 style={{ padding: "20px" }}>{data.message}</h2>
             ) : (
               data?.map((item) => {
+                const date_joined = FormatDate(new Date(item.date_joined));
+                const last_login = FormatDate(new Date(item.last_login));
                 return (
                   <tr key={item.id}>
                     <td>{item.first_name}</td>
                     <td>{item.last_name}</td>
                     <td>{item.email}</td>
                     <td>{item.phone_number}</td>
+                    <td>{last_login}</td>
+                    <td>{date_joined}</td>
                   </tr>
                 );
               }) ??

@@ -38,7 +38,6 @@ export default function SendFeedBack() {
           <div className="feedback-box">
             <Box
               sx={{
-                minWidth: "400px",
                 width: "100%",
                 marginTop: 8,
                 display: "flex",

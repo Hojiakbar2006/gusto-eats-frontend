@@ -13,6 +13,7 @@ import {
   useGetUsersQuery,
   useGetUsersStaffQuery,
 } from "../../app/api/endpoints/forAdmin";
+import { FormatDate } from "../../utils/formatDate";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -93,17 +94,7 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {orders?.map((item) => {
-              const date = new Date(item.createdAt);
-
-              // Format the date using Intl.DateTimeFormat
-              const formattedDate = new Intl.DateTimeFormat("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              }).format(date);
-
+              const date = FormatDate(new Date(item.createdAt));
               return (
                 <tr key={item.id}>
                   <td
@@ -115,7 +106,7 @@ export default function Dashboard() {
                   </td>
                   <td>{item.phone_number}</td>
                   <td>{item.shippingAddress.address}</td>
-                  <td>{formattedDate}</td>
+                  <td>{date}</td>
                   <td>{item.totalPrice}</td>
                 </tr>
               );
