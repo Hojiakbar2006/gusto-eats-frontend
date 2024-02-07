@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Table from "../components/table/table";
+import Table from "../../common/table/table";
 import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setOrder } from "../../app/slice/orderItemSlice";
@@ -14,6 +14,7 @@ import {
   useGetUsersStaffQuery,
 } from "../../app/api/endpoints/forAdmin";
 import { FormatDate } from "../../utils/formatDate";
+import { SkeletonComp } from "../components";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -50,10 +51,8 @@ export default function Dashboard() {
       link: "/staff-users",
     },
   ];
-  const skeletonArray = Array.from({ length: 6 }, (_, index) => index + 1);
 
-  let load =
-    orderLoad || productLoad || categoryLoad || userLoad || userStaffLoad;
+  let load = orderLoad || productLoad || categoryLoad || userLoad || userStaffLoad;
 
   return (
     <div className="dashboard-container comp-container">
@@ -81,58 +80,37 @@ export default function Dashboard() {
           );
         })}
       </div>
-      <div className="table-card comp-container">
-        <Table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Address</th>
-              <th>Created At</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.map((item) => {
-              const date = FormatDate(new Date(item.createdAt));
-              return (
-                <tr key={item.id}>
-                  <td
-                    onClick={() => {
-                      dispatch(setOrder({ open: true, order: item }));
-                    }}
-                  >
-                    {item.name}
-                  </td>
-                  <td>{item.phone_number}</td>
-                  <td>{item.shippingAddress.address}</td>
-                  <td>{date}</td>
-                  <td>{item.totalPrice}</td>
-                </tr>
-              );
-            }) ??
-              skeletonArray.map((item) => (
-                <tr key={item}>
-                  <td>
-                    <Skeleton width="100%" height={30} />
-                  </td>
-                  <td>
-                    <Skeleton width="100%" height={30} />
-                  </td>
-                  <td>
-                    <Skeleton width="100%" height={30} />
-                  </td>
-                  <td>
-                    <Skeleton width="100%" height={30} />
-                  </td>
-                  <td>
-                    <Skeleton width="100%" height={30} />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      </div>
+      <Table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Created At</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders?.map((item) => {
+            const date = FormatDate(new Date(item.createdAt));
+            return (
+              <tr key={item.id}>
+                <td
+                  onClick={() => {
+                    dispatch(setOrder({ open: true, order: item }));
+                  }}
+                >
+                  {item.name}
+                </td>
+                <td>{item.phone_number}</td>
+                <td>{item.shippingAddress.address}</td>
+                <td>{date}</td>
+                <td>{item.totalPrice}</td>
+              </tr>
+            );
+          }) ?? <SkeletonComp sk_count={9} tab_col={5} />}
+        </tbody>
+      </Table>
     </div>
   );
 }

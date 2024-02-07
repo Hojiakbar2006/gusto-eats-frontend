@@ -29,22 +29,38 @@ export default function Footer() {
     <footer>
       <div>
         <div>
-          <Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://www.instagram.com/hojiakbar____0628/"
+          >
             <IconButton size="small">
               <Facebook sx={{ fontSize: 40 }} />
             </IconButton>
           </Link>
-          <Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://www.instagram.com/hojiakbar____0628/"
+          >
             <IconButton size="small">
               <Instagram sx={{ fontSize: 40 }} />
             </IconButton>
           </Link>
-          <Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://www.youtube.com/@hojiakbar-developer"
+          >
             <IconButton size="small">
               <YouTube sx={{ fontSize: 40 }} />
             </IconButton>
           </Link>
-          <Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://t.me/hojiakbar_0628"
+          >
             <IconButton size="small">
               <Telegram sx={{ fontSize: 40 }} />
             </IconButton>

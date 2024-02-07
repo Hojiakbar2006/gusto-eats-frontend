@@ -223,7 +223,7 @@ input::-webkit-inner-spin-button {
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 500px) {
   .food-container {
     grid-template-columns: 1fr;
     gap: 0.5rem;

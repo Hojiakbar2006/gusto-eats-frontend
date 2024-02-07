@@ -30,6 +30,7 @@ footer > :first-child > :last-child {
 footer > :first-child > :last-child > a {
   display: flex;
   align-items: center;
+  justify-content: flex-start !important;
   gap: 10px;
   text-decoration: none;
   color: #0000008a;

@@ -8,7 +8,10 @@ import Container from "@mui/material/Container";
 import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { useGetProfileQuery, useUpdateProfileMutation } from "../../../app/api/endpoints/auth";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "../../../app/api/endpoints/auth";
 
 export default function UpdateProfileForm() {
   const [updateDate, { isLoading: updateLoad }] = useUpdateProfileMutation();
@@ -62,13 +65,9 @@ export default function UpdateProfileForm() {
   };
 
   return (
-    <div className="comp-container">
+    <div className="comp-container" style={{ padding: "15px" }}>
       <h1>{data.first_name}</h1>
-      <Container
-        className="comp-container"
-        style={{ margin: "2% auto" }}
-        maxWidth="xs"
-      >
+      <Container>
         <CssBaseline />
         <Box
           sx={{
