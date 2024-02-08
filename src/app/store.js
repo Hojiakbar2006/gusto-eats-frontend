@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi, forAdminApi, orderApi, productApi } from "./api/endpoints";
 import apiService from "./api/apiService";
 
+import { loading } from "./slice/loadingSlice";
 import cartReducer from "./slice/cartSlice";
 import menuReducer from "./slice/toggleCartSlice";
 import authReducer from "./slice/authSlice";
@@ -13,6 +14,7 @@ export const store = configureStore({
     menu: menuReducer,
     auth: authReducer,
     orderItem: orderItemReducer,
+    loading,
     [apiService.reducerPath]: apiService.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,

@@ -4,7 +4,7 @@ import "./table.css";
 const Table = ({ children }) => {
   return (
     <div className="table-card comp-container">
-      <table className="custom-table">{children}</table>;
+      <table className="custom-table">{children}</table>
     </div>
   );
 };

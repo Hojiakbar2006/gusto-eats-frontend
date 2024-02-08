@@ -5,54 +5,14 @@ import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setOrder } from "../../app/slice/orderItemSlice";
 import { useGetOrdersQuery } from "../../app/api/endpoints/order";
-import {
-  useGetCategoriesQuery,
-  useGetProductsQuery,
-} from "../../app/api/endpoints/product";
-import {
-  useGetUsersQuery,
-  useGetUsersStaffQuery,
-} from "../../app/api/endpoints/forAdmin";
+import { useGetStatsQuery } from "../../app/api/endpoints/forAdmin";
 import { FormatDate } from "../../utils/formatDate";
 import { SkeletonComp } from "../components";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const { data: orders, isLoading: orderLoad } = useGetOrdersQuery();
-  const { data: products, isLoading: productLoad } = useGetProductsQuery();
-  const { data: categories, isLoading: categoryLoad } = useGetCategoriesQuery();
-  const { data: users, isLoading: userLoad } = useGetUsersQuery();
-  const { data: usersStaff, isLoading: userStaffLoad } =
-    useGetUsersStaffQuery();
-
-  const card = [
-    {
-      id: 1,
-      name: "Products",
-      count: products?.products.length || 0,
-      link: "/product",
-    },
-    {
-      id: 2,
-      name: "Categories",
-      count: categories?.length || 0,
-      link: "/category",
-    },
-    {
-      id: 3,
-      name: "Users",
-      count: users?.length || 0,
-      link: "/category",
-    },
-    {
-      id: 4,
-      name: "Staff",
-      count: usersStaff?.length || 0,
-      link: "/staff-users",
-    },
-  ];
-
-  let load = orderLoad || productLoad || categoryLoad || userLoad || userStaffLoad;
+  const { data } = useGetStatsQuery();
+  const { data: orders } = useGetOrdersQuery();
 
   return (
     <div className="dashboard-container comp-container">
@@ -60,9 +20,18 @@ export default function Dashboard() {
         <h2>Dashboard</h2>
       </div>
       <div className="card-container">
-        {card.map(({ id, name, count, link }) => {
-          return load ? (
-            <div className="comp-container card" key={id}>
+        {data?.map(({ id, entity, count, link }, index) => {
+          return (
+            <div className="comp-container card" key={index}>
+              <h1>
+                <Link to={link}>{entity}</Link>
+              </h1>
+              <h2>{count}</h2>
+            </div>
+          );
+        }) ?? (
+          <>
+            <div className="comp-container card">
               <h1>
                 <Skeleton width="100%" height="100%"></Skeleton>
               </h1>
@@ -70,15 +39,32 @@ export default function Dashboard() {
                 <Skeleton width="100%" height="100%"></Skeleton>
               </h2>
             </div>
-          ) : (
-            <div className="comp-container card" key={id}>
+            <div className="comp-container card">
               <h1>
-                <Link to={link}>{name}</Link>
+                <Skeleton width="100%" height="100%"></Skeleton>
               </h1>
-              <h2>{count}</h2>
+              <h2>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h2>
             </div>
-          );
-        })}
+            <div className="comp-container card">
+              <h1>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h1>
+              <h2>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h2>
+            </div>
+            <div className="comp-container card">
+              <h1>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h1>
+              <h2>
+                <Skeleton width="100%" height="100%"></Skeleton>
+              </h2>
+            </div>
+          </>
+        )}
       </div>
       <Table>
         <thead>

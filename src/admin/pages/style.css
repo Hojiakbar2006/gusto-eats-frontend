@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  overflow: auto;
 }
 
 .route {
@@ -19,6 +20,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: -20px;
   color: #fff;
   padding: 15px;
 }
@@ -49,12 +52,12 @@
   flex-direction: row; */
   display: grid;
   grid-template-columns: auto auto auto auto;
-  grid-template-rows: 150px;
   gap: 20px;
 }
 
 .card {
   display: flex;
+  height: 150px;
   flex-direction: column;
   gap: 10px;
   align-items: center;
@@ -62,8 +65,16 @@
   background-color: #f2f2f2;
 }
 
+.card > h1 {
+  text-align: center;
+}
+.card > h2 {
+  text-align: center;
+}
+
 .card > h1 > a {
   text-decoration: none;
+  text-align: center;
   color: #191919;
   transition: all 0.5s ease;
 }
@@ -79,4 +90,31 @@
 
 .card > h2 {
   min-width: 20%;
+}
+
+@media (max-width: 1200px) {
+  .card-container {
+    width: 100%;
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media (max-width: 1000px) {
+  .card-container {
+    width: 100%;
+    font-size: 20px;
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+  }
 }

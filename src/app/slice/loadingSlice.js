@@ -1,14 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const loadingSlice = createSlice({
+export const reLoading = createSlice({
   name: "loading",
-  initialState: { isLoading: false },
-  reducers: {
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
+  initialState: false,
+  reducers: { setLoading: (state, action) => action.payload },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      (action) => action.type.endsWith("/pending"),
+      () => true
+    );
+    builder.addMatcher(
+      (action) => action.type.endsWith("/fulfilled"),
+      () => false
+    );
+    builder.addMatcher(
+      (action) => action.type.endsWith("/rejected"),
+      () => false
+    );
   },
 });
 
-export const { setLoading } = loadingSlice.actions;
-export default loadingSlice.reducer;
+export const loading = reLoading.reducer;
+
+
+
+

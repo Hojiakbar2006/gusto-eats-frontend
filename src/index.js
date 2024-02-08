@@ -5,12 +5,14 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
 import { store } from "./app/store";
+import Loading from "./common/loading/loading";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <SnackbarProvider maxSnack={3} autoHideDuration={2000} variant="success">
       <App />
+      <Loading />
     </SnackbarProvider>
   </Provider>
 );
