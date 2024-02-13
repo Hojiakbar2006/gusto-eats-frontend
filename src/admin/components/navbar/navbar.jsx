@@ -52,7 +52,7 @@ export default function Navbar() {
               onClose={() => setAnchorEl(null)}
               MenuListProps={{ "aria-labelledby": "basic-button" }}
             >
-              <MenuItem onClick={() => handleMenuItemClick("/my-orders/")}>
+              <MenuItem onClick={() => handleMenuItemClick("/profile/")}>
                 Profile
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>

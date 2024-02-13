@@ -1,5 +1,4 @@
 import React from "react";
-import { Skeleton } from "@mui/material";
 import { useGetCategoriesQuery } from "../../app/api/endpoints/product";
 import Table from "../../common/table/table";
 import { RouteNav, SkeletonComp } from "../components";

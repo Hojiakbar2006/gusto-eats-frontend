@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./category.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../../app/api/endpoints/product";
@@ -7,11 +7,7 @@ import { Skeleton } from "@mui/material";
 const Category = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetCategoriesQuery();
-  const categoryRef = useRef(null);
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get("category");
+  const category = new URLSearchParams(useLocation().search).get("category");
 
   if (isLoading || isError) {
     return (
@@ -26,7 +22,7 @@ const Category = () => {
   }
 
   return (
-    <div className="cat-container" ref={categoryRef}>
+    <div className="cat-container">
       <div className="container">
         <div className="comp-container">
           <div className="category">

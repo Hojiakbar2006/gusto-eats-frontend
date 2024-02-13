@@ -19,6 +19,14 @@ export const forAdminApi = apiService.injectEndpoints({
         body,
       }),
     }),
+    updateProduct: builder.mutation({
+      query: (updatedData) => ({
+        url: endpoints.UPDATE_PRODUCT,
+        method: "PUT",
+        body: updatedData,
+      }),
+      invalidatesTags: ["product_update"],
+    }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: endpoints.DELETE_PRODUCT(id),
@@ -54,6 +62,7 @@ export const {
   useGetUsersStaffQuery,
   useGetStatsQuery,
   useMarkOrderAsDeliveredMutation,
+  useUpdateProductMutation,
   useCreateCategoryMutation,
   useCreateProductMutation,
   useDeleteCategoryMutation,

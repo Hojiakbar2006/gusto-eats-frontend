@@ -9,6 +9,8 @@ import {
   Customer,
   Employee,
   ProductAdd,
+  ProductEdit,
+  Profile,
 } from "../admin/pages";
 import CategoryAdd from "../admin/pages/add-form/category";
 
@@ -23,7 +25,9 @@ export default function Admin() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/product" element={<Product />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/product/add" element={<ProductAdd />} />
+              <Route path="/product/:id" element={<ProductEdit />} />
               <Route path="/category/add" element={<CategoryAdd />} />
               <Route path="/category" element={<Category />} />
               <Route path="/customers" element={<Customer />} />

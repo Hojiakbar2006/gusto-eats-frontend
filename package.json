@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^1.0.0",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.4",
     "@mui/lab": "^5.0.0-alpha.160",
     "@mui/material": "^5.15.4",
@@ -14,7 +12,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.5",
-    "dotenv": "^16.3.1",
     "formik": "^2.4.5",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
