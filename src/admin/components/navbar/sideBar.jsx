@@ -41,6 +41,12 @@ const SideBar = () => {
       text: "Staff Users",
       to: "/staff-users",
     },
+    {
+      key: "receiver",
+      icon: <TeamOutlined />,
+      text: "Order receiver",
+      to: "/receiver",
+    },
   ];
 
   return (
