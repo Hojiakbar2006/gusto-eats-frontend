@@ -26,13 +26,14 @@ nav {
   padding: 8px 15px;
   border-radius: 5px;
   text-decoration: none;
-  border: 1px solid #0b5dd6;
+  color: #1677ff !important;
+  border: 1px solid #1677ff !important;
 }
 
 .list-items .active {
-  background: #0b5dd6;
-  color: #fff;
-  border: 1px solid #0b5dd6;
+  background: #1677ff !important;
+  color: #fff !important;
+  border: 1px solid #1677ff;
 }
 
 @media screen and (max-width: 1000px) {
@@ -46,7 +47,7 @@ nav {
   }
   nav button,
   a {
-        display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 40px !important;

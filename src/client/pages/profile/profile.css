@@ -3,7 +3,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 350px auto;
-  align-items: center;
+  /* align-items: flex-start; */
   gap: 20px;
 }
 

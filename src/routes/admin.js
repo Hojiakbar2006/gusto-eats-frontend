@@ -13,6 +13,7 @@ import {
   Profile,
 } from "../admin/pages";
 import CategoryAdd from "../admin/pages/add-form/category";
+import { Button, Result } from "antd";
 
 export default function Admin() {
   return (
@@ -23,6 +24,17 @@ export default function Admin() {
           <div className="main-row">
             <SideBar />
             <Routes>
+              <Route
+                path="*"
+                element={
+                  <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Button type="primary">Back Home</Button>}
+                  />
+                }
+              />
               <Route path="/" element={<Dashboard />} />
               <Route path="/product" element={<Product />} />
               <Route path="/profile" element={<Profile />} />

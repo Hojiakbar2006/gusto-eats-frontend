@@ -1,98 +1,82 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, memo } from "react";
 import "./cart.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useSnackbar } from "notistack";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Box, IconButton, TextField } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { Remove, DeleteForeverOutlined } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
+import { Form, Input, Button, message } from "antd";
+import { FormatPrice } from "../../../utils/formatPrice";
+import { useCreateOrderMutation } from "../../../app/api/endpoints/order";
 import {
   getCartItems,
   addQty,
   removeQty,
   removeFromCart,
 } from "../../../app/slice/cartSlice";
-import { red } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
-import { FormatPrice } from "../../../utils/formatPrice";
-import { useCreateOrderMutation } from "../../../app/api/endpoints/order";
+import { DeleteFilled } from "@ant-design/icons";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const { enqueueSnackbar } = useSnackbar();
+  const [form] = Form.useForm();
   const [sendOrder, { isLoading }] = useCreateOrderMutation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getCartItems());
   }, [dispatch]);
 
-  const LoginSchema = Yup.object().shape({
-    name: Yup.string().required("Required"),
-    address: Yup.string().required("Required"),
-    phone_number: Yup.string()
-      .required("Required")
-      .min(9, "Phone number should be at least 9 characters"),
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      phone_number: "",
-      address: "",
+  const handleAddQty = useCallback(
+    (item) => {
+      dispatch(addQty(item));
     },
-    
-    validationSchema: LoginSchema,
-    onSubmit: async (values) => {
-      const { name, phone_number, address } = values;
-      if (!localStorage.getItem("access_token")) {
-        navigate("/login/");
-      }
+    [dispatch]
+  );
 
-      try {
-        const res = await sendOrder({
+  const handleRemoveQty = useCallback(
+    (item) => {
+      dispatch(removeQty(item));
+    },
+    [dispatch]
+  );
+
+  const handleRemoveFromCart = useCallback(
+    (item) => {
+      dispatch(removeFromCart(item));
+    },
+    [dispatch]
+  );
+
+  const handleSubmit = async (values) => {
+    const { name, phone_number, address } = values;
+
+    try {
+      const res = await sendOrder({
+        name,
+        phone_number,
+        shippingAddress: { address },
+        totalPrice: cart.total,
+        orderItems: cart.cartItems.map(({ id, name, quantity }) => ({
+          product: id,
           name,
-          phone_number,
-          shippingAddress: { address },
-          totalPrice: cart.total,
-          orderItems: cart.cartItems.map(({ id, name, quantity }) => ({
-            product: id,
-            name,
-            qty: quantity,
-          })),
-        });
+          qty: quantity,
+        })),
+      });
 
-        const { error, data } = res;
-        console.log(res);
-
-        if (data) {
-          enqueueSnackbar("Buyurtmangiz jo'natildi", {
-            variant: "success",
-          });
-          localStorage.removeItem("cartItems");
-          localStorage.removeItem("cartState");
-        }
-
-        if (error) {
-          if (error.status === 400) {
-            enqueueSnackbar("Ma'lumotlari to'liq emas", {
-              variant: "error",
-            });
-          }
-          if (error.status === 401) {
-            enqueueSnackbar("Ma'lumotlari topilmadi", {
-              variant: "error",
-            });
-          }
-        }
-      } catch (error) {
-        console.error("Order submission error:", error);
+      if (res.data) {
+        message.success("Buyurtmangiz jo'natildi");
+        localStorage.removeItem("cartItems");
+        localStorage.removeItem("cartState");
       }
-    },
-  });
+
+      if (res.error) {
+        if (res.error.status === 400) {
+          message.error("Ma'lumotlari to'liq emas");
+        }
+        if (res.error.status === 401) {
+          message.error("Ma'lumotlari topilmadi");
+        }
+      }
+    } catch (error) {
+      console.error("Order submission error:", error);
+    }
+  };
 
   return (
     <div className="cart">
@@ -114,17 +98,13 @@ const Cart = () => {
                       <h3>{item.name}</h3>
                     </div>
                     <div>
-                      <IconButton onClick={() => dispatch(addQty(item))}>
-                        <AddIcon />
-                      </IconButton>
-                      <span>{item.quantity}</span>
-                      <IconButton onClick={() => dispatch(removeQty(item))}>
-                        <Remove />
-                      </IconButton>
+                      <Button onClick={() => handleAddQty(item)}>+</Button>
+                      <span> {item.quantity} </span>
+                      <Button onClick={() => handleRemoveQty(item)}>-</Button>
                     </div>
-                    <IconButton onClick={() => dispatch(removeFromCart(item))}>
-                      <DeleteForeverOutlined sx={{ color: red[500] }} />
-                    </IconButton>
+                    <Button onClick={() => handleRemoveFromCart(item)}>
+                      <DeleteFilled style={{ color: "red" }} />
+                    </Button>
                   </div>
                 );
               })}
@@ -147,75 +127,46 @@ const Cart = () => {
               ? `${cart.cartItems.length} Items in your cart`
               : `${cart.cartItems.length} Item in your cart`}
           </h3>
-          <Box component="form" onSubmit={formik.handleSubmit} noValidate>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
+          <Form form={form} onFinish={handleSubmit}>
+            <Form.Item
               name="name"
-              autoComplete="off"
-              autoFocus
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="phone_number"
-              label="Phone number"
-              type="number"
-              id="phone_number"
-              autoComplete="off"
-              value={formik.values.phone_number}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.phone_number &&
-                Boolean(formik.errors.phone_number)
-              }
-              helperText={
-                formik.touched.phone_number && formik.errors.phone_number
-              }
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="address"
-              label="Address"
-              type="text"
-              id="address"
-              autoComplete="off"
-              value={formik.values.address}
-              onChange={formik.handleChange}
-              error={formik.touched.address && Boolean(formik.errors.address)}
-              helperText={formik.touched.address && formik.errors.address}
-            />
-            <LoadingButton
-              fullWidth
-              sx={{
-                height: "50px",
-                fontSize: "18px",
-                bgcolor: "#0b5dd6",
-                marginBottom: 2,
-                marginTop: 2,
-              }}
-              type="submit"
-              variant="contained"
-              loading={isLoading}
-              loadingIndicator="Loading…"
+              rules={[{ required: true, message: "Name is required" }]}
             >
-              Place order
-            </LoadingButton>
-          </Box>
+              <Input placeholder="Name" size="large" />
+            </Form.Item>
+            <Form.Item
+              name="phone_number"
+              rules={[
+                { required: true, message: "Phone number is required" },
+                {
+                  min: 9,
+                  message: "Phone number should be at least 9 characters",
+                },
+              ]}
+            >
+              <Input placeholder="Phone number" type="number" size="large" />
+            </Form.Item>
+            <Form.Item
+              name="address"
+              rules={[{ required: true, message: "Address is required" }]}
+            >
+              <Input.TextArea placeholder="Address" size="large" />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                size="large"
+              >
+                Place order
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     </div>
   );
 };
 
-export default Cart;
+export default memo(Cart);

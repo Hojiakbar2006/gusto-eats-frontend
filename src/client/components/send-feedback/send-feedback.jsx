@@ -1,26 +1,20 @@
 import React from "react";
-import "./send-feedback.css";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { Grid, TextField, Box } from "@mui/material";
+import { Form, Input, Button, message, Row, Col } from "antd";
 import axios from "axios";
-import { useSnackbar } from "notistack";
+import "./send-feedback.css";
 
 export default function SendFeedBack() {
-  const { enqueueSnackbar } = useSnackbar();
+  const [form] = Form.useForm();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const handleSubmit = async (values) => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/feedback/`,
-        data
+        values
       );
       if (res.status === 201) {
-        enqueueSnackbar("Feedback has been sended", {
-          variant: "success",
-        });
-        event.target.reset();
+        message.success("Feedback has been sent");
+        form.resetFields();
       }
     } catch (err) {
       console.log(err);
@@ -34,76 +28,69 @@ export default function SendFeedBack() {
           <div className="title">
             <h1>Send feedback</h1>
             <p>You can write down everything to develop foods</p>
+            <br />
           </div>
           <div className="feedback-box">
-            <Box
-              sx={{
-                width: "100%",
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              component="form"
-              onSubmit={handleSubmit}
+            <Form
+              form={form}
+              onFinish={handleSubmit}
+              layout="vertical"
+              style={{ width: "100%", margin: "0 auto" }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
+              <Row gutter={13}>
+                <Col span={12}>
+                  <Form.Item
                     name="first_name"
-                    label="First name"
-                    required
-                    fullWidth
-                    id="firstName"
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    type="text"
-                    id="lastName"
-                    label="Last Name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your first name",
+                      },
+                    ]}
+                  >
+                    <Input size="large" placeholder="First Name" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
                     name="last_name"
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    type="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    sx={{ height: "80px" }}
-                    required
-                    fullWidth
-                    name="message"
-                    label="Message"
-                    type="text"
-                    autoComplete="off"
-                  />
-                </Grid>
-              </Grid>
-
-              <LoadingButton
-                type="submit"
-                fullWidth
-                sx={{ height: "50px", bgcolor: "#0b5dd6" }}
-                variant="contained"
-                loading={false}
-                loadingIndicator="Loading…"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your last name",
+                      },
+                    ]}
+                  >
+                    <Input size="large" placeholder="Last Name" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Please enter a valid email address",
+                  },
+                ]}
               >
-                Send feedback
-              </LoadingButton>
-            </Box>
+                <Input size="large" placeholder="Email Address" />
+              </Form.Item>
+              <Form.Item
+                name="message"
+                rules={[
+                  { required: true, message: "Please enter your message" },
+                ]}
+              >
+                <Input.TextArea rows={4} size="large" placeholder="Message" />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" size="large">
+                  Send Feedback
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </div>
       </div>

@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { LoadingButton } from "@mui/lab";
+import { Form, Input, Button, message as antdMessage } from "antd";
 import { Link } from "react-router-dom";
-import { useSnackbar } from "notistack";
 import {
   useGetProfileQuery,
   useUpdateProfileMutation,
@@ -16,12 +9,9 @@ import {
 export default function UpdateProfileForm() {
   const [updateDate, { isLoading: updateLoad }] = useUpdateProfileMutation();
   const { data } = useGetProfileQuery();
-  const { enqueueSnackbar } = useSnackbar();
   const [value, setValue] = useState(data);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     try {
       const updatedFields = {};
 
@@ -42,137 +32,81 @@ export default function UpdateProfileForm() {
         const res = await updateDate(updatedFields);
         const { error, data } = res;
         if (data) {
-          enqueueSnackbar("Ma'lumotlar o'zgartirildi", {
-            variant: "success",
-          });
+          antdMessage.success("Ma'lumotlar o'zgartirildi");
         }
         if (error) {
-          enqueueSnackbar("Ma'lumotlarni o'zgartirishda xatolik", {
-            variant: "error",
-          });
+          antdMessage.error("Ma'lumotlarni o'zgartirishda xatolik");
         }
       } else {
-        enqueueSnackbar("O'zgartirilgan ma'lumotlar topilmadi", {
-          variant: "info",
-        });
+        antdMessage.info("O'zgartirilgan ma'lumotlar topilmadi");
       }
     } catch (error) {
       console.error("Xatolik:", error);
-      enqueueSnackbar("Amaliyotni bajarishda xatolik", {
-        variant: "error",
-      });
+      antdMessage.error("Amaliyotni bajarishda xatolik");
     }
   };
 
   return (
-    <div className="comp-container" style={{ padding: "15px" }}>
-      <h1>{data.first_name}</h1>
-      <Container>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 3,
-            marginBottom: 3,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <div className="comp-container" style={{ padding: "25px" }}>
+      <h1>{data?.first_name}</h1>
+      <Form
+        onFinish={handleSubmit}
+        layout="vertical"
+        style={{
+          marginTop: 10,
+          width: "100%",
+        }}
+        initialValues={data}
+      >
+        <Input
+          size="large"
+          placeholder="First Name"
+          value={value?.first_name}
+          onChange={(e) => setValue({ ...value, first_name: e.target.value })}
+        />
+        <br />
+        <br />
+        <Input
+          size="large"
+          placeholder="Last Name"
+          value={value?.last_name}
+          onChange={(e) => setValue({ ...value, last_name: e.target.value })}
+        />
+        <br />
+        <br />
+        <Input
+          size="large"
+          placeholder="Email Address"
+          value={value?.email}
+          onChange={(e) => setValue({ ...value, email: e.target.value })}
+        />
+        <br />
+        <br />
+        <Input
+          size="large"
+          placeholder="Phone Number"
+          type="number"
+          value={value?.phone_number}
+          onChange={(e) => setValue({ ...value, phone_number: e.target.value })}
+        />
+        <br />
+        <br />
+        <Link>Change Password</Link>
+        <br />
+        <br />
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="large"
+          style={{ width: "100%" }}
+          loading={updateLoad}
         >
-          <Typography component="h1" variant="h5">
-            Update
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="off"
-                  name="first_name"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  onChange={(e) =>
-                    setValue({ ...value, first_name: e.target.value })
-                  }
-                  value={value.first_name}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="last_name"
-                  autoComplete="off"
-                  onChange={(e) =>
-                    setValue({ ...value, last_name: e.target.value })
-                  }
-                  value={value.last_name}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="off"
-                  onChange={(e) =>
-                    setValue({ ...value, email: e.target.value })
-                  }
-                  value={value.email}
-                />
-              </Grid>
-              <Grid item xs={12} marginBottom={2}>
-                <TextField
-                  required
-                  fullWidth
-                  name="phone_number"
-                  label="Phone number"
-                  type="number"
-                  id="phone_number"
-                  autoComplete="off"
-                  onChange={(e) =>
-                    setValue({ ...value, phone_number: e.target.value })
-                  }
-                  value={value.phone_number}
-                />
-              </Grid>
-            </Grid>
-            <Link>Change Password</Link>
-            <LoadingButton
-              fullWidth
-              sx={{
-                height: "50px",
-                fontSize: "18px",
-                bgcolor: "#0b5dd6",
-                marginBottom: 2,
-                marginTop: 3,
-              }}
-              type="submit"
-              variant="contained"
-              loading={updateLoad}
-              loadingIndicator="Loading…"
-            >
-              Update
-            </LoadingButton>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/login/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
+          Update
+        </Button>
+        <br />
+        <br />
+        <Link to="/login/">Already have an account? Sign in</Link>
+      </Form>
     </div>
   );
 }

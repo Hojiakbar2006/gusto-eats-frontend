@@ -20,10 +20,10 @@ export const forAdminApi = apiService.injectEndpoints({
       }),
     }),
     updateProduct: builder.mutation({
-      query: (updatedData) => ({
-        url: endpoints.UPDATE_PRODUCT,
+      query: ({data, id}) => ({
+        url: endpoints.UPDATE_PRODUCT(id),
         method: "PUT",
-        body: updatedData,
+        body: data,
       }),
       invalidatesTags: ["product_update"],
     }),
@@ -32,6 +32,7 @@ export const forAdminApi = apiService.injectEndpoints({
         url: endpoints.DELETE_PRODUCT(id),
         method: "DELETE",
       }),
+      invalidatesTags: ["product_update"],
     }),
     createCategory: builder.mutation({
       query: (body) => ({
@@ -39,13 +40,14 @@ export const forAdminApi = apiService.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["category_update"],
     }),
-    // eslint-disable-next-line no-dupe-keys
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: endpoints.DELETE_CATEGORY(id),
         method: "DELETE",
       }),
+      invalidatesTags: ["category_update"],
     }),
     markOrderAsDelivered: builder.mutation({
       query: (id) => ({
@@ -53,10 +55,10 @@ export const forAdminApi = apiService.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    invalidatesTags: ["order_update"],
   }),
 });
 
-//Auto generated hook - starts with use & ends on query
 export const {
   useGetUsersQuery,
   useGetUsersStaffQuery,

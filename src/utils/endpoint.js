@@ -9,7 +9,8 @@ export const ACCOUNTS_LOGOUT = "accounts/logout/";
 
 export const GET_STATS = "api/v1/admin/stats/";
 
-export const PRODUCTS = (query) => `api/v1/products/?${query}`;
+export const PRODUCTS = (query) =>
+  query ? `api/v1/products/?${query}` : `api/v1/products/`;
 export const PRODUCT_BY_ID = (id) => `api/v1/products/${id}/`;
 export const CREATE_PRODUCT_REVIEW = (productId) =>
   `products/${productId}/create_review/`;
@@ -33,7 +34,7 @@ export const DELETE_PRODUCT = (id) => `api/v1/products/${id}/`;
 export const UPDATE_PRODUCT = (id) => `api/v1/products/${id}/`;
 
 export const CREATE_CATEGORY = "api/v1/categories/";
-export const DELETE_CATEGORY = (id) => `categories/${id}/`;
+export const DELETE_CATEGORY = (id) => `api/v1/categories/${id}/`;
 
 export const MARK_ORDER_AS_DELIVERED = (id) =>
   `orders/${id}/mark_as_delivered/`;

@@ -1,11 +1,10 @@
 import React from "react";
 import "./recommended.css";
 import { Link } from "react-router-dom";
-import { Button, IconButton, Rating, Skeleton } from "@mui/material";
-import { addToCart } from "../../../app/slice/cartSlice";
+import { Button, Rate, Skeleton } from "antd";
 import { useDispatch } from "react-redux";
 import { FormatPrice } from "../../../utils/formatPrice";
-import { AddShoppingCart } from "@mui/icons-material";
+import { addToCart } from "../../../app/slice/cartSlice";
 import { useGetRecommendedProductsQuery } from "../../../app/api/endpoints/product";
 
 export default function Recommended() {
@@ -23,10 +22,6 @@ export default function Recommended() {
           </div>
           <div className="food-container">
             {data?.map((item) => {
-              const description = item.description
-                .split(" ")
-                .slice(0, 12)
-                .join(" ");
               const img =
                 item.image && !item.image.startsWith("http")
                   ? `${process.env.REACT_APP_BASE_URL}${item.image}`
@@ -42,17 +37,17 @@ export default function Recommended() {
                   </figure>
                   <div className="box-items">
                     <h2>{item.name}</h2>
-                    <p>{description}</p>
-                    <Rating name="read-only" value={3} readOnly />
+                    <p>{item.description}</p>
+                    <Rate disabled defaultValue={3} />
 
                     <div className="group">
                       <p>{FormatPrice(item.price)}</p>
-                      <IconButton
-                        variant="outlined"
+                      <Button
+                        type="primary"
                         onClick={() => dispatch(addToCart(item))}
                       >
-                        <AddShoppingCart sx={{ color: "#0b5dd6" }} />
-                      </IconButton>
+                        Add to Cart
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -61,27 +56,24 @@ export default function Recommended() {
               skeletonArray.map((item) => (
                 <div className="box" key={item}>
                   <figure>
-                    <Skeleton
-                      variant="rectangular"
-                      width="100%"
-                      height="100%"
-                      style={{ borderRadius: 8 }}
-                    />
+                    <Skeleton.Image style={{ borderRadius: 8 }} />
                   </figure>
                   <div className="box-items">
-                    <Skeleton variant="text" width="100%" height={40} />
-                    <Skeleton variant="text" width="100%" height={80} />
-                    <Skeleton variant="rectangular" width={100} height={20} />
+                    <Skeleton.Input style={{ width: "100%" }} active />
+                    <Skeleton.Input style={{ width: "100%" }} active />
+                    <Skeleton.Button style={{ width: 100 }} active />
                     <div className="group">
-                      <Skeleton variant="rectangular" width={80} height={30} />
-                      <Skeleton variant="circular" width={50} height={50} />
+                      <Skeleton.Button style={{ width: 80 }} active />
+                      <Skeleton.Avatar size="large" active />
                     </div>
                   </div>
                 </div>
               ))}
           </div>
           <Link to="/menu">
-            <Button variant="outlined">for more {">>"}</Button>
+            <Button type="primary" shape="round">
+              for more &gt;&gt;
+            </Button>
           </Link>
         </div>
       </div>

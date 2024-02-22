@@ -1,8 +1,8 @@
 import React from "react";
-import "./banner.css";
-import { Button, InputAdornment, OutlinedInput } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { Button, Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import "./banner.css";
 
 export default function Banner() {
   const navigate = useNavigate();
@@ -23,27 +23,26 @@ export default function Banner() {
                 }
               }}
             >
-              <OutlinedInput
+              <Input
                 id="search"
                 name="search"
-                fullWidth
-                autoComplete="off"
-                sx={{
+                placeholder="search"
+                style={{
                   background: "#fff",
                   borderRadius: "5px",
                   height: "40px",
                   fontSize: "18px",
                 }}
-                startAdornment={
-                  <InputAdornment position="start">search:</InputAdornment>
-                }
+                prefix={<SearchOutlined />}
               />
               <Button
-                type="submit"
-                sx={{ height: "40px", width: "180px", bgcolor: "#0b5dd6" }}
-                startIcon={<Search />}
-                disableElevation
-                variant="contained"
+                type="primary"
+                htmlType="submit"
+                style={{
+                  height: "40px",
+                  width: "180px",
+                  backgroundColor: "#0b5dd6",
+                }}
               >
                 Search
               </Button>

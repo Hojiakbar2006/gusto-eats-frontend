@@ -1,182 +1,188 @@
 import React, { useState } from "react";
 import { RouteNav } from "../../components";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Form, Input, Select, Button, Flex } from "antd";
+import { useParams } from "react-router-dom";
 import {
   useGetCategoriesQuery,
   useGetProductByIdQuery,
   useGetProductsQuery,
 } from "../../../app/api/endpoints/product";
-import { LoadingButton } from "@mui/lab";
 import { useUpdateProductMutation } from "../../../app/api/endpoints/forAdmin";
-import { useParams } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function ProductEdit() {
-  const id = useParams().id;
+  const { id } = useParams();
+
   const { data: categoriesData = [] } = useGetCategoriesQuery();
-  const [img, setImg] = useState(null);
+  const { data: productData, isLoading: productIsLoading } =
+    useGetProductByIdQuery(id);
+  const [editProduct, { isLoading: updateIsLoading }] =
+    useUpdateProductMutation();
+  const { data: product } = useGetProductsQuery();
+
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { data: allProduct } = useGetProductsQuery();
-  const { data: product } = useGetProductByIdQuery(id);
-  const [value, setValue] = useState(product);
+  const [img, setImg] = useState(null);
   const [copied, setCopied] = useState(false);
+
+  const types = [
+    ...new Set(
+      product?.products
+        .filter((item) =>
+          selectedCategory ? item.category === selectedCategory : item
+        )
+        .map((item) => item.type)
+    ),
+  ];
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500); // Or any other duration you prefer
+    setTimeout(() => setCopied(false), 1500);
   };
 
-  const { updateProduct } = useUpdateProductMutation();
-
-  const filteredProducts = allProduct?.products.filter(
-    (item) => item.category === selectedCategory
-  );
-  const types = [...new Set(filteredProducts?.map((item) => item.type))];
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
+  const handleSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("category", values.category);
+    formData.append("type", values.type);
+    formData.append("price", values.price);
+    formData.append("discount", values.discount);
+    formData.append("countInStock", values.countInStock);
+    formData.append("image", img);
 
     try {
-      const response = await updateProduct(data);
-
+      const response = await editProduct({ formData, id });
       console.log(response);
     } catch (err) {
       console.error(err);
     }
   };
 
+  if (productIsLoading) {
+    return "as";
+  }
+
   return (
-    <div className="dashboard-container comp-container">
+    <div className="dashboard-container comp-container add-form">
       <RouteNav route={"back"} pageName={"Product"} />
-      <form
-        // onSubmit={handleSubmit}
+      <Form
+        onFinish={handleSubmit}
         className="add-form"
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        style={{ display: "flex", flexDirection: "column" }}
+        encType="multipart/form-data"
       >
-        <TextField
-          value={value?.name}
-          required
-          fullWidth
-          id="name"
-          label="Product Name"
+        <Form.Item
           name="name"
-          autoComplete="off"
-          autoFocus
-        />
-        <TextField
-          value={value?.description}
-          required
-          fullWidth
-          id="description"
-          label="Product Description"
+          initialValue={productData?.name}
+          rules={[{ required: true, message: "Please input product name!" }]}
+        >
+          <Input placeholder="Product name" size="large" />
+        </Form.Item>
+        <Form.Item
           name="description"
-          autoComplete="off"
-        />
-        <FormControl fullWidth>
-          <InputLabel id="category-label">Category</InputLabel>
+          initialValue={productData?.description}
+          rules={[
+            { required: true, message: "Please input product description!" },
+          ]}
+        >
+          <Input.TextArea placeholder="Product description" size="large" />
+        </Form.Item>
+        <Form.Item
+          name="category"
+          initialValue={productData?.category}
+          rules={[{ required: true, message: "Please select category!" }]}
+        >
           <Select
-            displayEmpty
-            name="category"
-            labelId="category-label"
-            input={<OutlinedInput />}
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            size="large"
+            placeholder="Select a category"
+            onChange={(value) => setSelectedCategory(value)}
           >
-            {categoriesData.map((item) => (
-              <MenuItem key={item.id} value={item.id}>
-                {item.name}
-              </MenuItem>
+            {categoriesData.map((category) => (
+              <Select.Option key={category.id} value={category.id}>
+                {category.name}
+              </Select.Option>
             ))}
           </Select>
-        </FormControl>
-        <TextField
-          required
-          fullWidth
-          id="type"
-          label="Product Type"
+        </Form.Item>
+        <Form.Item>
+          <div>
+            Other types:
+            {Array.from(types).map((item) => (
+              <button
+                type="button"
+                key={item}
+                onClick={() => copyToClipboard(item)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  marginLeft: "15px",
+                }}
+              >
+                {item}
+              </button>
+            ))}
+            {copied ? (
+              <span style={{ marginLeft: "10px" }}>{"(: "}Copied!</span>
+            ) : null}
+          </div>
+        </Form.Item>
+        <Form.Item
           name="type"
-          autoComplete="off"
-          value={value?.type}
-        />
-        <div>
-          Other types:{" "}
-          {types.map((item) => (
-            <button
-              type="button"
-              key={item}
-              onClick={() => copyToClipboard(item)}
-              style={{
-                background: "none",
-                border: "none",
-                fontSize: "16px",
-                cursor: "pointer",
-                marginLeft: "15px",
-              }}
-            >
-              {item}
-            </button>
-          ))}
-          {copied ? (
-            <span style={{ marginLeft: "10px" }}>{"(: "}Copied!</span>
-          ) : null}
-        </div>
-        <TextField
-          value={value?.price}
-          required
-          fullWidth
-          id="price"
-          label="Product Price"
+          initialValue={productData?.type}
+          rules={[{ required: true, message: "Please input product type!" }]}
+        >
+          <Input placeholder="Product type" size="large" />
+        </Form.Item>
+        <Form.Item
           name="price"
-          type="number"
-          autoComplete="off"
-        />
-        <TextField
-          value={value?.discount}
-          required
-          fullWidth
-          id="discount"
-          label="Product Discount"
+          initialValue={productData?.price}
+          rules={[{ required: true, message: "Please input product price!" }]}
+        >
+          <Input type="number" placeholder="Product price" size="large" />
+        </Form.Item>
+        <Form.Item
           name="discount"
-          type="number"
-          autoComplete="off"
-        />
-        <TextField
-          value={value?.countInStock}
-          required
-          fullWidth
-          type="number"
-          id="countInStock"
-          label="Product Stock"
+          initialValue={productData?.discount}
+          rules={[
+            { required: true, message: "Please input product discount!" },
+          ]}
+        >
+          <Input type="number" placeholder="Product discount" size="large" />
+        </Form.Item>
+        <Form.Item
           name="countInStock"
-          autoComplete="off"
-        />
-        <label>
-          <input
+          initialValue={productData?.countInStock}
+          rules={[{ required: true, message: "Please input product stock!" }]}
+        >
+          <Input type="number" placeholder="Product Stock" size="large" />
+        </Form.Item>
+        <Form.Item>
+          <Input
             name="image"
             type="file"
+            size="large"
             onChange={(e) => setImg(e.target.files[0])}
           />
-          {img ? img.name : <span>Product Image</span>}
-        </label>
-        <LoadingButton
-          type="submit"
-          fullWidth
-          sx={{ height: "50px", bgcolor: "#0b5dd6" }}
-          variant="contained"
-          //   loading={isLoading}
-          loadingIndicator="Loading…"
-        >
-          Add Product
-        </LoadingButton>
-      </form>
+        </Form.Item>
+        <Flex wrap="wrap" gap="small">
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            loading={updateIsLoading}
+            icon={updateIsLoading && <LoadingOutlined />}
+          >
+            Update Product
+          </Button>
+          <Button size="large" type="primary" danger htmlType="button">
+            Delete Product
+          </Button>
+        </Flex>
+      </Form>
     </div>
   );
 }

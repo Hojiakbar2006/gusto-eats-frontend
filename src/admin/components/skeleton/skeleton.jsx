@@ -1,4 +1,4 @@
-import { Skeleton } from "@mui/material";
+import { Skeleton } from "antd";
 import React from "react";
 
 export default function SkeletonComp({ sk_count, tab_col }) {
@@ -12,7 +12,7 @@ export default function SkeletonComp({ sk_count, tab_col }) {
     <tr key={item}>
       {columnCount.map((item) => (
         <td key={item}>
-          <Skeleton width="100%" height={30} />
+          <Skeleton.Input size="small" />
         </td>
       ))}
     </tr>

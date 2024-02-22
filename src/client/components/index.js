@@ -1,5 +1,3 @@
-export { default as Login } from "./auth/login";
-export { default as Register } from "./auth/register";
 export { default as Navbar } from "./navbar/navbar";
 export { default as Banner } from "./banner/banner";
 export { default as Category } from "./category/category";

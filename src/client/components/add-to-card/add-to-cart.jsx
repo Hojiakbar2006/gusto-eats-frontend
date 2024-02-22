@@ -1,11 +1,9 @@
-import { Button, Drawer, IconButton } from "@mui/material";
-import { red } from "@mui/material/colors";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Drawer, Button, Image } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { FormatPrice } from "../../../utils/formatPrice";
-import "./add-to-cart.css";
-import { DeleteForeverOutlined } from "@mui/icons-material";
+import { DeleteOutlined } from "@ant-design/icons";
 import { closeCart } from "../../../app/slice/toggleCartSlice";
 import { getCartItems, removeFromCart } from "../../../app/slice/cartSlice";
 
@@ -17,41 +15,64 @@ const AddToCart = () => {
   useEffect(() => {
     dispatch(getCartItems());
   }, [dispatch]);
+
   return (
-    <Drawer anchor="right" open={isOpen} onClose={() => dispatch(closeCart())}>
-      <div className="cart-dr">
+    <Drawer
+      placement="right"
+      visible={isOpen}
+      onClose={() => dispatch(closeCart())}
+    >
+      <div>
         {cart.cartItems.map((item) => {
-          const name = item.name.split(" ").slice(0, 2).join(" ");
+          const name = item.name.split(" ").slice(0, 4).join(" ");
           const img =
             item.image && !item.image.startsWith("http")
               ? `${process.env.REACT_APP_BASE_URL}${item.image}`
               : item.image;
           return (
-            <div className="box" key={item.id}>
-              <figure>
-                <img src={img} alt={item.name} />
-              </figure>
-              <div>
-                <h6>{name}</h6>
-                {`${item.quantity}x${item.price}`}
+            <>
+              <div
+                className="comp-container"
+                key={item.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 10,
+                  padding: 10,
+                }}
+              >
+                <Image
+                  src={img}
+                  alt={item.name}
+                  style={{ marginRight: 10, width: 50, height: 50 }}
+                />
+                <div style={{ flex: 1 }}>
+                  <h4>{name}</h4>
+                  <p>Count: {item.quantity}</p>
+                  <p>Total Price: {FormatPrice(item.quantity * item.price)}</p>
+                </div>
+                <Button
+                  onClick={() => dispatch(removeFromCart(item))}
+                  icon={<DeleteOutlined style={{ color: "red" }} />}
+                />
               </div>
-              <IconButton onClick={() => dispatch(removeFromCart(item))}>
-                <DeleteForeverOutlined sx={{ color: red[500] }} />
-              </IconButton>
-            </div>
+            </>
           );
         })}
-        <div className="cart-btn-group">
+        <div>
+          <br />
+
           <h3>Sub Total: {FormatPrice(cart.total)} </h3>
+          <br />
+
           <div>
             <Button
-              variant="contained"
-              sx={{ height: "40px", color: "#fff", bgcolor: "#0b5dd6" }}
+              type="primary"
+              style={{ height: "40px" }}
               component={Link}
-              to="/cart/"
               onClick={() => dispatch(closeCart())}
             >
-              View Cart
+              <NavLink to="/cart/">Place order</NavLink>
             </Button>
           </div>
         </div>

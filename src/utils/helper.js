@@ -2,6 +2,8 @@ import service_svg1 from "../assets/svg/service1.svg";
 import service_svg2 from "../assets/svg/service2.svg";
 import service_svg3 from "../assets/svg/service3.svg";
 
+import logo from "../assets/icons/logo.png";
+
 import for_feedback from "../assets/svg/for-feedback.svg";
 
 import uz from "../assets/icons/UZ.svg";
@@ -16,6 +18,7 @@ export {
   service_svg3,
   for_feedback,
   ads_img,
+  logo,
   uz,
   ru,
   us,

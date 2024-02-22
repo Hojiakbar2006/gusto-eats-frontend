@@ -2,112 +2,90 @@ import React from "react";
 import "./footer.css";
 import { Link } from "react-router-dom";
 import { ru, us, uz } from "../../../utils/helper";
-
 import {
-  Facebook,
-  Instagram,
-  Mail,
-  Phone,
-  Telegram,
-  YouTube,
-} from "@mui/icons-material";
-import {
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+  FacebookFilled,
+  MailOutlined,
+  PhoneFilled,
+  YoutubeFilled,
+  InstagramFilled,
+} from "@ant-design/icons";
+import { Select, Layout } from "antd";
 
-export default function Footer() {
-  const [lang, setLang] = React.useState("");
+const { Footer } = Layout;
+const { Option } = Select;
 
-  const handleChange = (event) => {
-    setLang(event.target.value);
+export default function AppFooter() {
+  const [lang, setLang] = React.useState(uz);
+
+  const handleChange = (value) => {
+    setLang(value);
   };
+
   return (
-    <footer>
-      <div>
+    <Footer className="footer">
+      <div className="social-media-links">
         <div>
           <Link
             target="_blank"
             rel="noopener noreferrer"
             to="https://www.instagram.com/hojiakbar____0628/"
           >
-            <IconButton size="small">
-              <Facebook sx={{ fontSize: 40 }} />
-            </IconButton>
-          </Link>
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            to="https://www.instagram.com/hojiakbar____0628/"
-          >
-            <IconButton size="small">
-              <Instagram sx={{ fontSize: 40 }} />
-            </IconButton>
+            <InstagramFilled style={{ fontSize: 40 }} />
           </Link>
           <Link
             target="_blank"
             rel="noopener noreferrer"
             to="https://www.youtube.com/@hojiakbar-developer"
           >
-            <IconButton size="small">
-              <YouTube sx={{ fontSize: 40 }} />
-            </IconButton>
+            <YoutubeFilled style={{ fontSize: 40 }} />
           </Link>
           <Link
             target="_blank"
             rel="noopener noreferrer"
             to="https://t.me/hojiakbar_0628"
           >
-            <IconButton size="small">
-              <Telegram sx={{ fontSize: 40 }} />
-            </IconButton>
+            {/* <TelegramFilled style={{ fontSize: 40 }} /> */}
+          </Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://www.facebook.com/hojiakbar.developer"
+          >
+            <FacebookFilled style={{ fontSize: 40 }} />
           </Link>
         </div>
-        <div>
+        <div className="contact-info">
           <a href="tel:+998993250628">
-            <Phone />
-            +998 (99) 325-0628
+            <PhoneFilled /> +998 (99) 325-0628
           </a>
           <a href="mailto:hojiakbarnasriddinov2006@gmail.com">
-            <Mail />
-            hojiakbarnasriddinov2006@gmail.com
+            <MailOutlined /> hojiakbarnasriddinov2006@gmail.com
           </a>
         </div>
       </div>
       <div>
-        <p>© 2024- 2030 All rights reserved.</p>
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel size="small" id="demo-simple-select-label">
-            Language
-          </InputLabel>
+        <div className="copyright">
+          <p>© 2024-2030 All rights reserved.</p>
+        </div>
+        <div className="language-selector">
           <Select
-            sx={{ width: "100%" }}
             value={lang}
-            label="Language"
             onChange={handleChange}
-            size="small"
+            style={{ width: 120 }}
+            size="large"
           >
-            <MenuItem value={uz}>
-              <figure>
-                <img src={uz} alt="uz" /> UZ
-              </figure>
-            </MenuItem>
-            <MenuItem value={ru}>
-              <figure>
-                <img src={ru} alt="ru" /> RU
-              </figure>
-            </MenuItem>
-            <MenuItem value={us}>
-              <figure>
-                <img src={us} alt="us" /> US
-              </figure>
-            </MenuItem>
+            <Option value={uz}>
+              <img src={uz} alt="uz" /> UZ
+            </Option>
+            <Option value={ru}>
+              <img src={ru} alt="ru" /> RU
+            </Option>
+            <Option value={us}>
+              <img src={us} alt="us" /> US
+            </Option>
           </Select>
-        </FormControl>
+        </div>
       </div>
-    </footer>
+    </Footer>
   );
 }

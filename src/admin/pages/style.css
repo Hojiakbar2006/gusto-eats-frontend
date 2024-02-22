@@ -24,6 +24,7 @@
   top: -20px;
   color: #fff;
   padding: 15px;
+  z-index: 1;
 }
 
 .route > button {

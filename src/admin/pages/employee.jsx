@@ -1,49 +1,47 @@
 import React from "react";
-import Table from "../../common/table/table";
+import { Table } from "antd";
 import { useGetUsersStaffQuery } from "../../app/api/endpoints/forAdmin";
 import { FormatDate } from "../../utils/formatDate";
-import { SkeletonComp } from "../components";
+import { RouteNav } from "../components";
 
 export default function Employee() {
   const { data } = useGetUsersStaffQuery();
 
   return (
     <div className="dashboard-container comp-container">
-      <div className="route comp-container">
-        <h2>Users</h2>
-        <button>{"Add >>>"}</button>
-      </div>
-      <Table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Last name</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Last login</th>
-            <th>Created at</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.message ? (
-            <h2 style={{ padding: "20px" }}>{data.message}</h2>
-          ) : (
-            data?.map((item) => {
-              const date_joined = FormatDate(new Date(item.date_joined));
-              const last_login = FormatDate(new Date(item.last_login));
-              return (
-                <tr key={item.id}>
-                  <td>{item.first_name}</td>
-                  <td>{item.last_name}</td>
-                  <td>{item.email}</td>
-                  <td>{item.phone_number}</td>
-                  <td>{last_login}</td>
-                  <td>{date_joined}</td>
-                </tr>
-              );
-            }) ?? <SkeletonComp sk_count={9} tab_col={6} />
-          )}
-        </tbody>
+      <RouteNav pageName="Employee" route="add" />
+      <Table
+        dataSource={data?.message ? [] : data}
+        loading={!data}
+        rowKey="id"
+        pagination={{
+          pageSize: 5, // 1 sahifada ko'rsatiladigan ma'lumotlar soni
+          total: data?.length, // Jami ma'lumotlar soni
+          showSizeChanger: false, // Ko'rsatiladigan ma'lumotlar sonini o'zgartirish imkoniyati
+          showQuickJumper: false, // Tezkor o'tish uchun o'zgartirish imkoniyati
+          showTotal: (total) => `Jami ${total} ta Employee`,
+        }}
+      >
+        <Table.Column title="Name" dataIndex="first_name" key="first_name" />
+        <Table.Column title="Last name" dataIndex="last_name" key="last_name" />
+        <Table.Column title="Email" dataIndex="email" key="email" />
+        <Table.Column
+          title="Phone number"
+          dataIndex="phone_number"
+          key="phone_number"
+        />
+        <Table.Column
+          title="Last login"
+          dataIndex="last_login"
+          key="last_login"
+          render={(text) => FormatDate(new Date(text))}
+        />
+        <Table.Column
+          title="Created at"
+          dataIndex="date_joined"
+          key="date_joined"
+          render={(text) => FormatDate(new Date(text))}
+        />
       </Table>
     </div>
   );

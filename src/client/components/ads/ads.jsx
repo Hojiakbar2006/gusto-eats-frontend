@@ -1,14 +1,12 @@
 import React from "react";
+import { Image } from "antd";
 import { ads_img } from "../../../utils/helper";
-import { ImageListItem } from "@mui/material";
 
 export default function Ads() {
   return (
     <div className="container">
       <div className="comp-container">
-        <ImageListItem>
-          <img src={ads_img} alt="ads" />
-        </ImageListItem>
+        <Image preview={false} src={ads_img} alt="ads" />
       </div>
     </div>
   );

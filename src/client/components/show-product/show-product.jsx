@@ -2,8 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { FormatPrice } from "../../../utils/formatPrice";
 import { addToCart } from "../../../app/slice/cartSlice";
-import { IconButton, Rating, Skeleton } from "@mui/material";
-import { AddShoppingCart } from "@mui/icons-material";
+import { Rate, Skeleton, Button } from "antd";
 import { useLocation } from "react-router-dom";
 import { useGetProductsQuery } from "../../../app/api/endpoints/product";
 
@@ -36,20 +35,15 @@ const ShowProduct = () => {
             {skeletonArray.map((_, index) => (
               <div key={index} className="box">
                 <figure>
-                  <Skeleton
-                    variant="rectangular"
-                    width="100%"
-                    height="100%"
-                    style={{ borderRadius: 8 }}
-                  />
+                  <Skeleton.Image style={{ borderRadius: 8 }} />
                 </figure>
                 <div className="box-items">
-                  <Skeleton variant="text" width="100%" height={40} />
-                  <Skeleton variant="text" width="100%" height={80} />
-                  <Skeleton variant="rectangular" width={100} height={20} />
+                  <Skeleton.Input style={{ width: "100%" }} active />
+                  <Skeleton.Input style={{ width: "100%" }} active />
+                  <Skeleton.Button style={{ width: 100 }} active />
                   <div className="group">
-                    <Skeleton variant="rectangular" width={80} height={30} />
-                    <Skeleton variant="circular" width={50} height={50} />
+                    <Skeleton.Button style={{ width: 80 }} active />
+                    <Skeleton.Avatar size="large" active />
                   </div>
                 </div>
               </div>
@@ -70,30 +64,38 @@ const ShowProduct = () => {
           <div className="food-container">
             {data.products
               ?.filter((item) => item.type === type)
-              ?.map((item) => (
-                <div key={item.id} className="box">
-                  <figure>
-                    <img src={item.image} alt="" />
-                    {item.discount !== 0 && (
-                      <div className="chip">{item.discount}%</div>
-                    )}
-                  </figure>
-                  <div className="box-items">
-                    <h2>{item.name}</h2>
-                    <p>{item.description.split(" ").slice(0, 12).join(" ")}</p>
-                    <Rating size="small" name="read-only" value={3} readOnly />
-                    <div className="group">
-                      <p>{FormatPrice(item.price)}</p>
-                      <IconButton
-                        variant="outlined"
-                        onClick={() => dispatch(addToCart(item))}
-                      >
-                        <AddShoppingCart sx={{ color: "#0b5dd6" }} />
-                      </IconButton>
+              ?.map((item) => {
+                const img =
+                  item.image && !item.image.startsWith("http")
+                    ? `${process.env.REACT_APP_BASE_URL}${item.image}`
+                    : item.image;
+                return (
+                  <div className="box" key={item.id}>
+                    <figure>
+                      <img src={img} alt="" />
+
+                      {item.discount !== 0 && (
+                        <div className="chip">{item.discount}%</div>
+                      )}
+                    </figure>
+                    <div className="box-items">
+                      <h2>{item.name}</h2>
+                      <p>{item.description}</p>
+                      <Rate disabled defaultValue={3} />
+
+                      <div className="group">
+                        <p>{FormatPrice(item.price)}</p>
+                        <Button
+                          type="primary"
+                          onClick={() => dispatch(addToCart(item))}
+                        >
+                          Add to Cart
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )) ?? "salom"}
+                );
+              })}
           </div>
         </div>
       </div>

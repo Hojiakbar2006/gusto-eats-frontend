@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.css";
 import { RouteNav } from "../../components";
-import { TextField } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { Input, Button, Form } from "antd";
 import { useCreateCategoryMutation } from "../../../app/api/endpoints/forAdmin";
 
 export default function CategoryAdd() {
   const [uploadCategory, { isLoading }] = useCreateCategoryMutation();
-  const [img, setImg] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -29,33 +28,17 @@ export default function CategoryAdd() {
         className="add-form"
         style={{ display: "flex", flexDirection: "column", gap: "10px" }}
       >
-        <TextField
-          required
-          fullWidth
-          id="name"
-          label="Category Name"
-          name="name"
-          autoComplete="off"
-          autoFocus
-        />
-        <label>
-          <input
+        <Input required name="name" placeholder="Category Name" autoFocus />
+        <Form.Item>
+          <Input
             name="image"
             type="file"
-            onChange={(e) => setImg(e.target.files[0])}
+            size="large"
           />
-          {img ? img.name : <span>Category Image</span>}
-        </label>
-        <LoadingButton
-          type="submit"
-          fullWidth
-          sx={{ height: "50px", bgcolor: "#0b5dd6" }}
-          variant="contained"
-          loading={isLoading}
-          loadingIndicator="Loading…"
-        >
+        </Form.Item>
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Add Product
-        </LoadingButton>
+        </Button>
       </form>
     </div>
   );

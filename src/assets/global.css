@@ -23,6 +23,10 @@ body {
   gap: 20px;
 }
 
+:root {
+  --main-color: #1677ff;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

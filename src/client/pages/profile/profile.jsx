@@ -1,62 +1,58 @@
 import React from "react";
 import "./profile.css";
-import Table from "../../../common/table/table";
-import { LinearProgress } from "@mui/material";
+import { Table } from "antd";
 import { UpdateProfileForm } from "../../components";
 import { useGetProfileQuery } from "../../../app/api/endpoints/auth";
 import { useGetOrdersQuery } from "../../../app/api/endpoints/order";
 
 export default function Profile() {
+  const { isError: pError } = useGetProfileQuery();
   const {
-    data: profile,
-    isLoading: profileLoad,
-    isError: p,
-  } = useGetProfileQuery();
-  const { data: order, isLoading: orderLoad, isError: o } = useGetOrdersQuery();
+    data: orders,
+    isLoading: orderLoad,
+    isError: oError,
+  } = useGetOrdersQuery();
 
-  if (profileLoad || orderLoad) {
-    return (
-      <div className="loading">
-        <LinearProgress />
-      </div>
-    );
+  if (pError || oError) {
+    return <h1>Something went wrong</h1>;
   }
-  if (p || o) {
-    return <h1>Some thiing went error</h1>;
-  }
+
   return (
     <div className="container">
       <div className="profile">
-        <UpdateProfileForm data={profile} />
-        {order.length > 0 ? (
-          <div className="table-card comp-container">
-            <Table>
-              <thead>
-                <tr>
-                  <td>Name</td>
-                  <td>Phone number</td>
-                  <td>Address</td>
-                  <td>Total price</td>
-                  <td>Actions</td>
-                </tr>
-              </thead>
-              <tbody>
-                {order.map((item) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td>{item.phone_number}</td>
-                      <td>{item.shippingAddress.address}</td>
-                      <td>{item.totalPrice}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </div>
-        ) : (
-          <h1>No order</h1>
-        )}
+        <UpdateProfileForm />
+
+        <div className="comp-container">
+          <Table
+            rowKey="id"
+            dataSource={orders}
+            loading={orderLoad}
+            pagination={{
+              pageSize: 7, // 1 sahifada ko'rsatiladigan ma'lumotlar soni
+              total: orders?.length, // Jami ma'lumotlar soni
+              showSizeChanger: false, // Ko'rsatiladigan ma'lumotlar sonini o'zgartirish imkoniyati
+              showQuickJumper: false, // Tezkor o'tish uchun o'zgartirish imkoniyati
+              showTotal: (total) => `Jami ${total} ta Buyurtma`,
+            }}
+          >
+            <Table.Column title="Name" dataIndex="name" key="name" />
+            <Table.Column
+              title="Phone number"
+              dataIndex="phone_number"
+              key="phone_number"
+            />
+            <Table.Column
+              title="Address"
+              dataIndex="shippingAddress.address"
+              key="address"
+            />
+            <Table.Column
+              title="Total price"
+              dataIndex="totalPrice"
+              key="totalPrice"
+            />
+          </Table>
+        </div>
       </div>
     </div>
   );

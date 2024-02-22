@@ -41,14 +41,14 @@
 }
 
 .cat-btn.active {
-  background: #0b5dd6;
+  background: #0b5dd6 !important;
   color: #fff;
 }
 
 .cat-btn:hover {
-  background: #014fc4;
-  color: #fff;
+  background: #014fc4 !important;
+  color: #fff !important;
 }
 .cat-btn:active {
-  background: #0b5dd6;
+  background: #0b5dd6 !important;
 }

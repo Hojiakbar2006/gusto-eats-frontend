@@ -12,7 +12,7 @@ export const apiService = createApi({
       }
     },
   }),
-  tagTypes: [],
+  tagTypes: ["category_update", "product_update", "order_update"],
   endpoints: (builder) => ({}),
 });
 export default apiService;
