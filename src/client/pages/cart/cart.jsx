@@ -66,12 +66,7 @@ const Cart = () => {
       }
 
       if (res.error) {
-        if (res.error.status === 400) {
-          message.error("Ma'lumotlari to'liq emas");
-        }
-        if (res.error.status === 401) {
-          message.error("Ma'lumotlari topilmadi");
-        }
+        message.error(res.error.data.detail);
       }
     } catch (error) {
       console.error("Order submission error:", error);
