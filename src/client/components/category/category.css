@@ -52,3 +52,19 @@
 .cat-btn:active {
   background: #0b5dd6 !important;
 }
+
+@media screen and (max-width: 700px) {
+  .cat-btn {
+    gap: 5px;
+    font-size: 16px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .cat-btn {
+    height: 30px;
+    font-size: 12px;
+    padding: 0 15px;
+  }
+}

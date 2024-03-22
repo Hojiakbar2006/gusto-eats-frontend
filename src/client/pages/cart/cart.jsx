@@ -1,14 +1,14 @@
-import React, { useEffect, useCallback, memo } from "react";
+import React, {  memo } from "react";
 import "./cart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Button, message } from "antd";
 import { FormatPrice } from "../../../utils/formatPrice";
 import { useCreateOrderMutation } from "../../../app/api/endpoints/order";
 import {
-  getCartItems,
   addQty,
   removeQty,
   removeFromCart,
+  deleteCart,
 } from "../../../app/slice/cartSlice";
 import { DeleteFilled } from "@ant-design/icons";
 
@@ -17,31 +17,6 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [form] = Form.useForm();
   const [sendOrder, { isLoading }] = useCreateOrderMutation();
-
-  useEffect(() => {
-    dispatch(getCartItems());
-  }, [dispatch]);
-
-  const handleAddQty = useCallback(
-    (item) => {
-      dispatch(addQty(item));
-    },
-    [dispatch]
-  );
-
-  const handleRemoveQty = useCallback(
-    (item) => {
-      dispatch(removeQty(item));
-    },
-    [dispatch]
-  );
-
-  const handleRemoveFromCart = useCallback(
-    (item) => {
-      dispatch(removeFromCart(item));
-    },
-    [dispatch]
-  );
 
   const handleSubmit = async (values) => {
     const { name, phone_number, address } = values;
@@ -52,7 +27,7 @@ const Cart = () => {
         phone_number,
         shippingAddress: { address },
         totalPrice: cart.total,
-        orderItems: cart.cartItems.map(({ id, name, quantity }) => ({
+        orderItems: cart.items.map(({ id, name, quantity }) => ({
           product: id,
           name,
           qty: quantity,
@@ -61,8 +36,7 @@ const Cart = () => {
 
       if (res.data) {
         message.success("Buyurtmangiz jo'natildi");
-        localStorage.removeItem("cartItems");
-        localStorage.removeItem("cartState");
+        dispatch(deleteCart());
       }
 
       if (res.error) {
@@ -77,9 +51,9 @@ const Cart = () => {
     <div className="cart">
       <div className="cart-container">
         <div className="comp-container">
-          {cart.cartItems.length !== 0 ? (
+          {cart.items.length !== 0 ? (
             <>
-              {cart.cartItems.map((item) => {
+              {cart.items.map((item) => {
                 const img =
                   item.image && !item.image.startsWith("http")
                     ? `${process.env.REACT_APP_BASE_URL}${item.image}`
@@ -93,11 +67,13 @@ const Cart = () => {
                       <h3>{item.name}</h3>
                     </div>
                     <div>
-                      <Button onClick={() => handleAddQty(item)}>+</Button>
+                      <Button onClick={() => dispatch(addQty(item))}>+</Button>
                       <span> {item.quantity} </span>
-                      <Button onClick={() => handleRemoveQty(item)}>-</Button>
+                      <Button onClick={() => dispatch(removeQty(item))}>
+                        -
+                      </Button>
                     </div>
-                    <Button onClick={() => handleRemoveFromCart(item)}>
+                    <Button onClick={() => dispatch(removeFromCart(item))}>
                       <DeleteFilled style={{ color: "red" }} />
                     </Button>
                   </div>
@@ -116,11 +92,11 @@ const Cart = () => {
             {FormatPrice(cart.total)}
           </h2>
           <h3>
-            {cart.cartItems.length === 0
+            {cart.items.length === 0
               ? "No Items"
-              : cart.cartItems.length > 1
-              ? `${cart.cartItems.length} Items in your cart`
-              : `${cart.cartItems.length} Item in your cart`}
+              : cart.items.length > 1
+              ? `${cart.items.length} Items in your cart`
+              : `${cart.items.length} Item in your cart`}
           </h3>
           <Form form={form} onFinish={handleSubmit}>
             <Form.Item

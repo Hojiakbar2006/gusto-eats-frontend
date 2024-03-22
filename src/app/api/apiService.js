@@ -4,7 +4,7 @@ export const apiService = createApi({
   reducerPath: "apiService",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, { }) => {
       const token = localStorage.getItem("accessToken");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

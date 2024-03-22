@@ -7,7 +7,7 @@ import "./banner.css";
 export default function Banner() {
   const navigate = useNavigate();
   return (
-    <div className="container">
+    <div className="container bn">
       <div className="comp-container">
         <div className="banner">
           <div>

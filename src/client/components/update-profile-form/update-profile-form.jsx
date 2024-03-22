@@ -7,42 +7,40 @@ import {
 } from "../../../app/api/endpoints/auth";
 
 export default function UpdateProfileForm() {
-  const [updateDate, { isLoading: updateLoad }] = useUpdateProfileMutation();
   const { data } = useGetProfileQuery();
-  const [value, setValue] = useState(data);
+  const [updateData, { isLoading: updateLoading }] = useUpdateProfileMutation();
+  const [formValues, setFormValues] = useState({
+    first_name: data?.first_name || "",
+    last_name: data?.last_name || "",
+    email: data?.email || "",
+    phone_number: data?.phone_number || "",
+  });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
       const updatedFields = {};
 
-      if (data.first_name !== value.first_name) {
-        updatedFields.first_name = value.first_name;
-      }
-      if (data.last_name !== value.last_name) {
-        updatedFields.last_name = value.last_name;
-      }
-      if (data.email !== value.email) {
-        updatedFields.email = value.email;
-      }
-      if (data.phone_number !== value.phone_number) {
-        updatedFields.phone_number = value.phone_number;
-      }
+      Object.keys(formValues).forEach((key) => {
+        if (data[key] !== formValues[key]) {
+          updatedFields[key] = formValues[key];
+        }
+      });
 
       if (Object.keys(updatedFields).length > 0) {
-        const res = await updateDate(updatedFields);
+        const res = await updateData(updatedFields);
         const { error, data } = res;
         if (data) {
-          antdMessage.success("Ma'lumotlar o'zgartirildi");
+          antdMessage.success("Profile updated successfully");
         }
         if (error) {
-          antdMessage.error("Ma'lumotlarni o'zgartirishda xatolik");
+          antdMessage.error("Failed to update profile");
         }
       } else {
-        antdMessage.info("O'zgartirilgan ma'lumotlar topilmadi");
+        antdMessage.info("No changes were made");
       }
     } catch (error) {
-      console.error("Xatolik:", error);
-      antdMessage.error("Amaliyotni bajarishda xatolik");
+      console.error("Error:", error);
+      antdMessage.error("An error occurred while processing the request");
     }
   };
 
@@ -56,29 +54,38 @@ export default function UpdateProfileForm() {
           marginTop: 10,
           width: "100%",
         }}
-        initialValues={data}
+        initialValues={formValues}
+        onValuesChange={(changedValues, allValues) => {
+          setFormValues(allValues);
+        }}
       >
         <Input
           size="large"
           placeholder="First Name"
-          value={value?.first_name}
-          onChange={(e) => setValue({ ...value, first_name: e.target.value })}
+          value={formValues.first_name}
+          onChange={(e) =>
+            setFormValues({ ...formValues, first_name: e.target.value })
+          }
         />
         <br />
         <br />
         <Input
           size="large"
           placeholder="Last Name"
-          value={value?.last_name}
-          onChange={(e) => setValue({ ...value, last_name: e.target.value })}
+          value={formValues.last_name}
+          onChange={(e) =>
+            setFormValues({ ...formValues, last_name: e.target.value })
+          }
         />
         <br />
         <br />
         <Input
           size="large"
           placeholder="Email Address"
-          value={value?.email}
-          onChange={(e) => setValue({ ...value, email: e.target.value })}
+          value={formValues.email}
+          onChange={(e) =>
+            setFormValues({ ...formValues, email: e.target.value })
+          }
         />
         <br />
         <br />
@@ -86,12 +93,14 @@ export default function UpdateProfileForm() {
           size="large"
           placeholder="Phone Number"
           type="number"
-          value={value?.phone_number}
-          onChange={(e) => setValue({ ...value, phone_number: e.target.value })}
+          value={formValues.phone_number}
+          onChange={(e) =>
+            setFormValues({ ...formValues, phone_number: e.target.value })
+          }
         />
         <br />
         <br />
-        <Link>Change Password</Link>
+        <Link to="/change-password">Change Password</Link>
         <br />
         <br />
         <Button
@@ -99,13 +108,13 @@ export default function UpdateProfileForm() {
           htmlType="submit"
           size="large"
           style={{ width: "100%" }}
-          loading={updateLoad}
+          loading={updateLoading}
         >
           Update
         </Button>
         <br />
         <br />
-        <Link to="/login/">Already have an account? Sign in</Link>
+        <Link to="/login">Already have an account? Sign in</Link>
       </Form>
     </div>
   );

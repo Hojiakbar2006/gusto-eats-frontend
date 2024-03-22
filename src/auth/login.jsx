@@ -27,6 +27,7 @@ export default function Login() {
         if (data.is_admin) {
           navigate("/");
         }
+        navigate(-1);
         saveLogin(data.access_token, data.refresh_token, data.is_admin);
       }
       if (error) {

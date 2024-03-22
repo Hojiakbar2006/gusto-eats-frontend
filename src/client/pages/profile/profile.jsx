@@ -28,10 +28,10 @@ export default function Profile() {
             dataSource={orders}
             loading={orderLoad}
             pagination={{
-              pageSize: 7, // 1 sahifada ko'rsatiladigan ma'lumotlar soni
-              total: orders?.length, // Jami ma'lumotlar soni
-              showSizeChanger: false, // Ko'rsatiladigan ma'lumotlar sonini o'zgartirish imkoniyati
-              showQuickJumper: false, // Tezkor o'tish uchun o'zgartirish imkoniyati
+              pageSize: 7,
+              total: orders?.length,
+              showSizeChanger: false,
+              showQuickJumper: false,
               showTotal: (total) => `Jami ${total} ta Buyurtma`,
             }}
           >

@@ -75,4 +75,18 @@ nav {
   .logo {
     width: 100px;
   }
+
+  .list-items {
+    gap: 20px !important;
+  }
+
+  .list-items > button,
+  a {
+    font-size: 10px !important;
+    height: 28px !important;
+  }
+
+  .list-items svg {
+    font-size: 20px !important;
+  }
 }

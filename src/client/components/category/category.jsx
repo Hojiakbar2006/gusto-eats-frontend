@@ -1,40 +1,13 @@
-import React, {  useEffect, useRef } from "react";
+import React from "react";
 import "./category.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../../app/api/endpoints/product";
-import { Badge, Button, Skeleton } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../../app/slice/cartSlice";
-import { openCart } from "../../../app/slice/toggleCartSlice";
+import { Button, Skeleton } from "antd";
 
 const Category = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const catRef = useRef(null);
-  const isAtTopRef = useRef(false);
-  const { data, isLoading, isError } = useGetCategoriesQuery();
+  const { data } = useGetCategoriesQuery();
   const category = new URLSearchParams(useLocation().search).get("category");
-  const cart = useSelector((state) => state.cart);
-
-
-  useEffect(() => {
-    dispatch(getCartItems());
-  }, [dispatch]);
-
-  if (isLoading || isError) {
-    return (
-      <div className="container" ref={catRef}>
-        <div className="comp-container">
-          <div className="category">
-            <Skeleton.Button style={{ width: "100%", height: 50 }} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  console.log(isAtTopRef);
 
   return (
     <div className="cat-container">
@@ -59,22 +32,8 @@ const Category = () => {
                 >
                   {item.name}
                 </Button>
-              ))}
+              )) ?? <Skeleton.Button style={{ width: "1000px", height: 40 }} />}
             </div>
-            <Badge
-              style={{ display: `${isAtTopRef ? "" : "none"}` }}
-              count={cart.cartItems.length}
-              onClick={() => dispatch(openCart())}
-            >
-              <ShoppingCartOutlined
-                style={{
-                  display: `${isAtTopRef ? "" : "none"}`,
-                  cursor: "pointer",
-                  fontSize: "30px",
-                  marginLeft: "20px",
-                }}
-              />
-            </Badge>
           </div>
         </div>
       </div>

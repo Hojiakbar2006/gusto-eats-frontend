@@ -8,15 +8,13 @@
 
 .service > .content {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
   gap: 20px;
 }
 
 .service > .content > .box {
-  min-width: 250px;
-  width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -35,4 +33,21 @@
   font-style: normal;
   font-weight: 700;
   line-height: 70px;
+}
+
+@media screen and (max-width: 1000px) {
+  .service > .content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .service > .content :nth-child(3) {
+    grid-area: 2/1/2/3;
+  }
+}
+@media screen and (max-width: 750px) {
+  .service > .content {
+    grid-template-columns: 1fr;
+  }
+  .service > .content :nth-child(3) {
+    grid-area: 3;
+  }
 }
