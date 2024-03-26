@@ -11,6 +11,8 @@ import {
   ProductAdd,
   ProductEdit,
   Profile,
+  EmployeeAdd,
+  CustomerAdd,
 } from "../admin/pages";
 import CategoryAdd from "../admin/pages/add-form/category";
 import { Button, Result } from "antd";
@@ -48,7 +50,9 @@ export default function Admin() {
               <Route path="/receiver" element={<Receiver />} />
               <Route path="/receiver/add" element={<ReceiverAdd />} />
               <Route path="/customers" element={<Customer />} />
+              <Route path="/customers/add" element={<CustomerAdd />} />
               <Route path="/staff-users" element={<Employee />} />
+              <Route path="/staff-users/add" element={<EmployeeAdd />} />
             </Routes>
           </div>
         </div>

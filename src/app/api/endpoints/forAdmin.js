@@ -19,6 +19,13 @@ export const forAdminApi = apiService.injectEndpoints({
         body,
       }),
     }),
+    createUser: builder.mutation({
+      query: (body) => ({
+        url: endpoints.CREATE_USER,
+        method: "POST",
+        body,
+      }),
+    }),
     updateProduct: builder.mutation({
       query: ({data, id}) => ({
         url: endpoints.UPDATE_PRODUCT(id),
@@ -62,8 +69,9 @@ export const forAdminApi = apiService.injectEndpoints({
 export const {
   useGetUsersQuery,
   useGetUsersStaffQuery,
-  useGetStatsQuery,
   useMarkOrderAsDeliveredMutation,
+  useGetStatsQuery,
+  useCreateUserMutation,
   useUpdateProductMutation,
   useCreateCategoryMutation,
   useCreateProductMutation,

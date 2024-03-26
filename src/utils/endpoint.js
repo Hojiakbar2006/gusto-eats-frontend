@@ -26,6 +26,7 @@ export const MARK_ORDER_AS_PAID = (id) => `orders/${id}/mark_as_paid/`;
 export const DELETE_ORDER = (id) => `orders/${id}/`;
 
 export const USERS = "accounts/users/";
+export const CREATE_USER = "accounts/users/add";
 export const USER_BY_ID = (id) => `accounts/users/${id}/`;
 export const USERS_STAFF = "accounts/users_staff/";
 
