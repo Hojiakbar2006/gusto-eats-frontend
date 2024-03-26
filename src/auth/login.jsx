@@ -26,8 +26,9 @@ export default function Login() {
         message.success("Login successful");
         if (data.is_admin) {
           navigate("/");
+        } else {
+          navigate(-1);
         }
-        navigate(-1);
         saveLogin(data.access_token, data.refresh_token, data.is_admin);
       }
       if (error) {
